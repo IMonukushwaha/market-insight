@@ -1,0 +1,64 @@
+.chat-response {
+    font-family: 'Söhne', 'Inter', -apple-system, sans-serif;
+    font-size: 15px;
+    line-height: 1.7;
+    color: #1f2320;
+    max-width: 680px;
+}
+
+.chat-response p {
+    margin: 0 0 14px;
+}
+
+.chat-response p:last-child {
+    margin-bottom: 0;
+}
+
+.chat-response strong {
+    font-weight: 600;
+    color: #111412;
+}
+
+.chat-response h1,
+.chat-response h2,
+.chat-response h3 {
+    font-weight: 600;
+    margin: 22px 0 10px;
+    line-height: 1.35;
+}
+
+.chat-response h1:first-child,
+.chat-response h2:first-child,
+.chat-response h3:first-child {
+    margin-top: 0;
+}
+
+.chat-response h1 { font-size: 19px; }
+.chat-response h2 { font-size: 17px; }
+.chat-response h3 {
+    font-size: 15px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #4a544d;
+}
+
+.chat-response ul,
+.chat-response ol {
+    margin: 0 0 14px;
+    padding-left: 22px;
+}
+
+.chat-response li {
+    margin-bottom: 6px;
+}
+
+.chat-response li::marker {
+    color: #8a938c;
+}
+
+.chat-response code {
+    background: #f0f2f0;
+    padding: 2px 5px;
+    border-radius: 3px;
+    font-size: 13px;
+}

@@ -1,0 +1,47 @@
+.recents-box {
+  display: flex;
+  flex-direction: column;
+  padding: 0.5rem 0.75rem;
+  gap: 0.4rem;
+}
+
+.recents-title {
+  margin: 0.25rem 0;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #0b0d10;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.recents-divider {
+  border: none;
+  border-top: 1px solid #272829;
+  margin: 0.25rem 0 0.5rem 0;
+}
+
+.recent-chat-item {
+  display: block;
+  width: 100%;
+  text-align: left;
+  background-color: transparent;
+  border: none;
+  border-radius: 0.6rem;
+  padding: 0.5rem 0.6rem;
+  font-size: 0.9rem;
+  font-family: inherit;
+  color: #0b0d10;
+  cursor: pointer;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: background-color 0.15s ease;
+}
+ 
+.recent-chat-item:hover {
+  background-color: #f3f4f6;
+}
+ 
+.recent-chat-item:active {
+  background-color: #e5e7eb;
+}

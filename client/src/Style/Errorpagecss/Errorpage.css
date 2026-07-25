@@ -1,0 +1,30 @@
+.error-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  width: 100%;
+  background-color: #fafafa;
+  text-align: center;
+}
+
+.error-box {
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 24px;
+}
+
+.error-page .error-status {
+  font-size: 96px;
+  font-weight: 700;
+  color: #d32f2f;
+  line-height: 1;
+  margin-bottom: 8px;
+}
+
+.error-page .error-message {
+  font-size: 18px;
+  color: #555;
+  margin-bottom: 24px;
+}

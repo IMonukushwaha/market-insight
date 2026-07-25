@@ -1,0 +1,46 @@
+.navbar {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.9rem 1.5rem;
+  border-bottom: 1px solid #c4d3f0;
+  background-color: #ffffff;
+}
+
+.navbar-auth-buttons {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.6rem;
+}
+ 
+.navbar-btn {
+  font-size: 0.9rem;
+  font-weight: 500;
+  padding: 0.45rem 1rem;
+  border-radius: 0.6rem;
+  cursor: pointer;
+  font-family: inherit;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+ 
+.navbar-login-btn {
+  background-color: transparent;
+  border: 1px solid #d1d5db;
+  color: #111827;
+}
+ 
+.navbar-login-btn:hover {
+  background-color: #f3f4f6;
+}
+ 
+.navbar-signup-btn {
+  background-color: #111827;
+  border: 1px solid #111827;
+  color: #ffffff;
+}
+ 
+.navbar-signup-btn:hover {
+  background-color: #1f2937;
+}

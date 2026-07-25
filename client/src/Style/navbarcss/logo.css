@@ -1,0 +1,24 @@
+.logo-box {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.5rem;
+}
+ 
+.logo-icon {
+  display: flex;
+  align-items: center;
+  color: #111827;
+}
+ 
+.logo-icon svg {
+  width: 1.6rem;
+  height: 1.6rem;
+}
+ 
+.logo-name p {
+  margin: 0;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #111827;
+}

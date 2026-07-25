@@ -1,0 +1,49 @@
+html, body, #root {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+.Interface {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100vh;
+}
+
+.navbar-box {
+  flex-shrink: 0;
+  width: 100%;
+}
+
+.content-row {
+  display: flex;
+  flex-direction: row;
+  flex: 1;
+  min-height: 0; /* important: lets children scroll properly inside a flex column */
+}
+
+.sidebar-box {
+  width: 260px;
+  height: 100%;
+  background-color: #f9fafb;
+  border-right: 1px solid #e5e7eb;
+  display: flex;
+  flex-direction: column;
+  padding: 1rem 0.5rem;
+  gap: 0.5rem;
+  overflow-y: auto;
+}
+
+.mainbar-box {
+  flex: 1;
+  height: 100%;
+  position: relative;
+  overflow-y: auto;
+  background-color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}

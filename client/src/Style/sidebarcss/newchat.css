@@ -1,0 +1,37 @@
+.newchat-box {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.75rem;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  width: 100%;
+  text-align: left;
+  font-family: inherit;
+  transition: background-color 0.15s ease;
+}
+
+.newchat-box:hover {
+  background-color: #f3f4f6;
+}
+
+.newchat-box:active {
+  background-color: #e5e7eb;
+}
+ 
+.newchat-box .icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #6b7280;
+}
+
+.newchat-box .profile-name p {
+  margin: 0;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: #0b0d10;
+}
