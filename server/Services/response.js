@@ -7,7 +7,7 @@ const { SYSTEM_PROMPT_Market_Insight } = require('../chatdata/history');
 
 const groq = new Groq({ apiKey: process.env.GROQ_AI_KEY });
 
-// keep only the last 4 exchanges to control token usage
+//only the last 4 exchanges to control token usage
 const MAX_HISTORY_TURNS = 4;
 
 module.exports.responsechat = async (userMessage, chatHistory = []) => {
@@ -27,7 +27,7 @@ module.exports.responsechat = async (userMessage, chatHistory = []) => {
 
     const data = await companydata(ticker);
     console.log(data);
-    
+
     const enrichedMessage = `The user asked: "${userMessage}". This question is about the company with ticker ${ticker}. Here is the live market data you will use:
     ${JSON.stringify(data, null, 2)}`;
 
