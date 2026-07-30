@@ -27,10 +27,7 @@ module.exports.responsechat = async (userMessage, chatHistory = []) => {
 
     const data = await companydata(ticker);
     console.log(data);
-
-    // Each source function now already returns concise, most-recent-only
-    // data (see stockhistory.js, stockanalystrecommendation.js, etc), so no
-    // extra summarization step is needed here before building the prompt.
+    
     const enrichedMessage = `The user asked: "${userMessage}". This question is about the company with ticker ${ticker}. Here is the live market data you will use:
     ${JSON.stringify(data, null, 2)}`;
 
