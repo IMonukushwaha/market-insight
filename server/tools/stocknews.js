@@ -1,4 +1,5 @@
 const axios = require('axios');
+const NEWS_COUNT = 5;
 
 async function getStockNews(ticker) {
   console.log(`Retrieving News of ${ticker}...`);
@@ -13,8 +14,8 @@ async function getStockNews(ticker) {
       {
         params: {
           q:           ticker,
-          newsCount:   10,      // number of news articles
-          quotesCount: 0,       // we only want news, not quotes
+          newsCount:   NEWS_COUNT,
+          quotesCount: 0,
         },
         headers: {
           'User-Agent': 'Mozilla/5.0',
@@ -29,16 +30,12 @@ async function getStockNews(ticker) {
       return `No news available for ${ticker}`;
     }
 
-    // Clean up — return only useful fields
     const cleanNews = news.map(article => ({
       title:       article.title,
       publisher:   article.publisher,
       link:        article.link,
-      publishedAt: new Date(article.providerPublishTime * 1000).toISOString(), // unix → readable date
+      publishedAt: new Date(article.providerPublishTime * 1000).toISOString(),
     }));
-
-    // const endTime = Date.now();
-    // console.log(`Retrieved ${cleanNews.length} news articles for ${ticker} in ${((endTime - startTime) / 1000).toFixed(3)} seconds`);
 
     return cleanNews;
 

@@ -9,8 +9,6 @@ async function getStockPrice(ticker){
         return 'Error: Invalid ticker provided. Please provide a valid ticker symbol.';
     }
 
-    // const startTime = Date.now();
-
     try {
     const response = await axios.get(
       `https://query2.finance.yahoo.com/v8/finance/chart/${ticker}`,
@@ -28,17 +26,12 @@ async function getStockPrice(ticker){
 
     const result = response.data.chart.result[0];
     const stockPrice = result.meta.regularMarketPrice;
-    // console.log(result);
-    // console.log(stockPrice);
-
     return stockPrice;
-    // const endTime = Date.now();
 
     }catch (err) {
     console.error(`Failed to retrieve stock price of ${ticker}:`, err.message);
     return 'Error: Failed to retrieve stock price. Please try again later.';
   }
-
 }
 
 module.exports = {getStockPrice};

@@ -5,7 +5,6 @@ const messageSchema = new Schema(
   {
     prompt: { type: String, required: true },
     response: { type: String, required: true },
-    type: { type: String, enum: ["text", "stock_insight"], default: "text" },
   },
   { timestamps: true }
 );

@@ -1,23 +1,5 @@
 const axios = require('axios');
-
-// Step 1 — get crumb and cookie from Yahoo first
-async function getYahooCrumb() {
-  const response = await axios.get(
-    'https://query1.finance.yahoo.com/v1/test/getcrumb',
-    {
-      headers: {
-        'User-Agent':      'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
-        'Accept':          'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
-        'Accept-Language': 'en-US,en;q=0.5',
-      },
-      withCredentials: true,
-    }
-  );
-  return {
-    crumb:  response.data,
-    cookie: response.headers['set-cookie'],
-  };
-}
+const { getYahooCrumb } = require('./yahooAuth');
 
 async function getBalanceSheet(ticker) {
   console.log(`Retrieving Balance Sheet of ${ticker}...`);
@@ -26,15 +8,14 @@ async function getBalanceSheet(ticker) {
     return 'Error: Invalid ticker provided. Please provide a valid ticker symbol.';
   }
 
-//   const startTime = Date.now();
-  const { crumb, cookie } = await getYahooCrumb();
-
   try {
+    const { crumb, cookie } = await getYahooCrumb();
+
     const response = await axios.get(
       `https://query2.finance.yahoo.com/v10/finance/quoteSummary/${ticker}`,
       {
         params: {
-          modules: 'financialData',  // same as stock.balance_sheet
+          modules: 'financialData',
           crumb
         },
         headers: {
@@ -46,13 +27,13 @@ async function getBalanceSheet(ticker) {
       }
     );
 
-    const financialData = response.data.quoteSummary.result[0].financialData;
+    const financialData = response.data.quoteSummary.result?.[0]?.financialData;
 
     if (!financialData) {
       return `No balance sheet available for ${ticker}`;
     }
 
-    const balanceSheet = {
+    return {
       currentPrice:            financialData.currentPrice?.fmt,
       targetHighPrice:         financialData.targetHighPrice?.fmt,
       targetLowPrice:          financialData.targetLowPrice?.fmt,
@@ -81,8 +62,6 @@ async function getBalanceSheet(ticker) {
       profitMargins:           financialData.profitMargins?.fmt,
       currency:                financialData.financialCurrency,
     };
-
-    return balanceSheet;
 
   } catch (err) {
     console.error(`Failed to retrieve balance sheet of ${ticker}:`, err.message);

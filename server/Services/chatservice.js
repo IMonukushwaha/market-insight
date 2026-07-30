@@ -1,4 +1,4 @@
-const { responsechat } = require('../agent');
+const { responsechat } = require('./response');
 const Chat = require('../models/chats');
 
 function buildMessageHistory(chatMessages) {
@@ -18,11 +18,9 @@ async function sendMessage(chatId, newPrompt) {
 
   const history = buildMessageHistory(chat.messages);
 
-  const { reply, userMessage, type } = await responsechat(newPrompt, history);
-  
-  console.log('type from responsechat:', type);
+  const { reply, userMessage } = await responsechat(newPrompt, history);
 
-  chat.messages.push({ prompt: userMessage, response: reply, type: type });
+  chat.messages.push({ prompt: userMessage, response: reply});
   await chat.save();
 
   return reply;
