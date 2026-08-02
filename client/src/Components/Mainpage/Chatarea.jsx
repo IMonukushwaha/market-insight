@@ -9,11 +9,11 @@ export default function Chatarea(){
 
     return <>
     <div className="chatarea-box">
+        <div className="searchbar-top">
+            <Searchbar/>
+        </div>
         <div className="response-scroll">
             {loadingChat ? <p>Loading chat...</p> : <Response messages={messages}/>}
-        </div>
-        <div className="searchbar-fixed">
-            <Searchbar/>
         </div>
     </div>
     </>

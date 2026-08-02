@@ -1,9 +1,9 @@
 const mongoose = require('mongoose');
 const Chat = require('../models/chats.js');
 const AppError = require('../utils/ExpressError.js');
-const { sendMessage } = require('../Services/chatservice.js');
+const { getResponse } = require('../Services/getResponse.js');
 
-module.exports.recievedPrompt = async (req, res) => {
+module.exports.Prompt = async (req, res) => {
     const { prompt, chatId } = req.body;
 
     if (!prompt || !prompt.trim()) {
@@ -24,7 +24,7 @@ module.exports.recievedPrompt = async (req, res) => {
         });
     }
 
-    const reply = await sendMessage(chat._id.toString(), prompt);
+    const reply = await getResponse(chat._id.toString(), prompt);
 
     res.status(200).json({
         chatId: chat._id,

@@ -14,13 +14,19 @@ export default function Searchbar(){
         setPrompt(event.target.value);
     }
 
+    function handleKeyDown(event){
+        if(event.key === "Enter"){
+            handleSend();
+        }
+    }
+
     async function handleSend(){
         if(!prompt.trim()){
             return;
         }
         setloading(true);
         try{
-            const res = await fetch(`http://localhost:5000/getprompt`, {
+            const res = await fetch(`http://localhost:5000/prompt`, {
                 method : 'POST',
                 headers : { "Content-Type": "application/json" },
                 credentials: 'include',
@@ -51,22 +57,25 @@ export default function Searchbar(){
         }
     }
 
-    return <>
-    <div className="search_container">
-        <div className="searchbar-box">
-            <input
-            placeholder="Write a message..."
-            value={prompt}
-            type="text"
-            onChange={handleOnChange}
-            className="searchbar-input"
-            ></input>
-        <div className="btndiv">
-            <button className="searchbar-send-btn" onClick={handleSend} disabled={loading}>
-                {loading ? "Sending..." : "Send"}
-            </button>
+    return (
+        <div className="search-wrapper">
+            <div className="search-box">
+                <div className="search-icon-wrap">
+                    <svg className="search-icon" viewBox="0 0 24 24" width="16" height="16">
+                        <path fill="currentColor" d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 1 0-.7.7l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0A4.5 4.5 0 1 1 14 9.5 4.5 4.5 0 0 1 9.5 14z"/>
+                    </svg>
+                </div>
+                <input
+                    placeholder="Enter a company name for market insight..."
+                    value={prompt}
+                    type="text"
+                    onChange={handleOnChange}
+                    onKeyDown={handleKeyDown}
+                    className="search-input"
+                    disabled={loading}
+                />
+                {loading && <span className="search-loading">Searching</span>}
+            </div>
         </div>
-        </div>
-    </div>
-    </>
+    )
 }

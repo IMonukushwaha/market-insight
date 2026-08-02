@@ -6,7 +6,17 @@
   flex-direction: column;
   overflow: hidden; /* the scrolling happens inside .response-scroll, not here */
 }
- 
+
+.searchbar-top {
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 2.5rem 1rem 2rem 1rem;
+  background: linear-gradient(180deg, #fafbfc 0%, #ffffff 100%);
+}
+
 .response-scroll {
   flex: 1;
   overflow-y: auto;
@@ -23,10 +33,4 @@
 }
 .response-scroll::-webkit-scrollbar-track {
   background: transparent;
-}
- 
-.searchbar-fixed {
-  flex-shrink: 0;
-  padding: 0.75rem 0;
-  background-color: #ffffff;
 }

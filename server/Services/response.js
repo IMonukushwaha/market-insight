@@ -7,19 +7,15 @@ const { SYSTEM_PROMPT_Market_Insight } = require('../chatdata/history');
 
 const groq = new Groq({ apiKey: process.env.GROQ_AI_KEY });
 
-//only the last 4 exchanges to control token usage
-const MAX_HISTORY_TURNS = 4;
-
-module.exports.responsechat = async (userMessage, chatHistory = []) => {
+module.exports.responsechat = async (newPrompt) => {
   try {
-    console.log(`\nYou: ${userMessage}`);
-    const trimmedHistory = chatHistory.slice(-MAX_HISTORY_TURNS * 2);
-    const ticker = await getTicker(userMessage, trimmedHistory);
+    console.log(`\nYou: ${newPrompt}`);
+    const ticker = await getTicker(newPrompt);
 
     // ---- Case 1: No ticker resolved -> tell the user directly, no general chat ----
     if (!ticker || typeof ticker !== 'string' || ticker.startsWith('Error')) {
       const reply = 'Your query should include a company name, or the company name could not be found. Please try again with a specific company (e.g. "Tesla stock" or "Apple market insight").';
-      return { reply, userMessage, type: 'text' };
+      return { reply};
     }
 
     // ---- Case 2: Ticker resolved -> stock insight pipeline ----
@@ -28,21 +24,20 @@ module.exports.responsechat = async (userMessage, chatHistory = []) => {
     const data = await companydata(ticker);
     console.log(data);
 
-    const enrichedMessage = `The user asked: "${userMessage}". This question is about the company with ticker ${ticker}. Here is the live market data you will use:
-    ${JSON.stringify(data, null, 2)}`;
+    const enrichedMessage = `The user asked: "${newPrompt}". This question is about the company with ticker ${ticker}. Here is the live market data you will use:
+    ${JSON.stringify(data, null, 2)}, Give the response in most human readable format easy to understand.`;
 
     const response = await groq.chat.completions.create({
       model: 'llama-3.3-70b-versatile',
       messages: [
         { role: 'system', content: SYSTEM_PROMPT_Market_Insight },
-        ...trimmedHistory,
         { role: 'user', content: enrichedMessage },
       ],
     });
 
     const reply = response.choices[0].message.content;
 
-    return { reply, userMessage, type: 'stock_insight' };
+    return { reply};
 
   } catch (err) {
     console.error('Groq API error:', err.message);

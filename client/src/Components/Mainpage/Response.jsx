@@ -5,7 +5,7 @@ export default function Response({ messages }) {
   return (
     <div className="response_container">
       {messages.map((msg, index) => (
-        <div key={index}>
+        <div key={index} className="message_pair">
           <p className="prompt">{msg.prompt}</p>
           <ChatResponse content={msg.response} />
         </div>
