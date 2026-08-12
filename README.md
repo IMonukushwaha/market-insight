@@ -34,7 +34,7 @@ Market Insights is a full-stack web application that gives users instant, AI-gen
 - Yahoo Finance API (real-time stock & financial data)
 
 ## Project Structure
-
+```
 Market_insight/
 ├── client/                    # React frontend (Vite)
 │   ├── src/
@@ -66,3 +66,4 @@ Market_insight/
     ├── middlewares.js            # validateUser, validatelogin, etc.
     ├── package-lock.json
     └── package.json
+```
