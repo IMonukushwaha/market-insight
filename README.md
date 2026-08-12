@@ -71,7 +71,7 @@ Market_insight/
     └── package.json
 ```
 
-## 🔌 API Overview
+## API Overview
 ```
 | Endpoint | Method | Description |
 |---|---|---|
@@ -84,3 +84,9 @@ Market_insight/
 | `/api/chat/chat/:chatId` | DELETE | Delete a specific chat by ID |
 | `/api/chat/chats` | GET | Retrieve all recent chats titles for the logged-in user |
 ```
+
+## Screenshot
+<img width="1916" height="913" alt="image" src="https://github.com/user-attachments/assets/ac3cca15-aa5d-4fc0-b710-1b5480dcd624" />
+
+
+
