@@ -1,20 +1,14 @@
 # Market Insights
 Market Insights is a full-stack web application that gives users instant, AI-generated financial insights on any public company.
 
-# Features
- **Company Search** — Enter any company name to generate a market insight report
- 
- **AI-Powered Chat** — Grok chatbot generates natural-language financial summaries
- 
- **Real-Time Market Data** — Stock price, 52-week high/low and more via Yahoo Finance API
- 
- **Financial Statements** — Balance sheet and income statement breakdowns (cash position, debt, revenue, net income, margins)
- 
- **Institutional Holders** — View major shareholders for a company
- 
- **Chat History** — Recent chats saved and accessible from the sidebar for each unique user.
- 
- **User Authentication** — Login/logout with session-based user accounts
+## Features
+- **Company Search** — Enter any company name to generate a market insight report
+- **AI-Powered Chat** — Grok chatbot generates natural-language financial summaries
+- **Real-Time Market Data** — Stock price, 52-week high/low and more via Yahoo Finance API
+- **Financial Statements** — Balance sheet and income statement breakdowns (cash position, debt, revenue, net income, margins)
+- **Institutional Holders** — View major shareholders for a company
+- **Chat History** — Recent chats saved and accessible from the sidebar for each unique user
+- **User Authentication** — Login/logout with session-based user accounts
 
  # Tech Stack
  
@@ -70,9 +64,8 @@ Market_insight/
     ├── package-lock.json
     └── package.json
 ```
-
 ## API Overview
-```
+
 | Endpoint | Method | Description |
 |---|---|---|
 | `/api/users/signup` | POST | Register a new user |
@@ -82,8 +75,7 @@ Market_insight/
 | `/api/chat/prompt` | POST | Send a prompt to generate a market insight (Grok) |
 | `/api/chat/chat/:chatId` | GET | Retrieve a specific chat by ID |
 | `/api/chat/chat/:chatId` | DELETE | Delete a specific chat by ID |
-| `/api/chat/chats` | GET | Retrieve all recent chats titles for the logged-in user |
-```
+| `/api/chat/chats` | GET | Retrieve all recent chat titles for the logged-in user |
 
 ## Screenshot
 <img width="1916" height="913" alt="image" src="https://github.com/user-attachments/assets/ac3cca15-aa5d-4fc0-b710-1b5480dcd624" />
