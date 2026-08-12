@@ -38,6 +38,9 @@ Market Insights is a full-stack web application that gives users instant, AI-gen
 Market_insight/
 ├── client/                    # React frontend (Vite)
 │   ├── src/
+│   │   ├── Components/
+│   │   ├── Contexts/
+│   │   ├── Styles/
 │   │   ├── App.css
 │   │   ├── App.jsx
 │   │   ├── index.css
