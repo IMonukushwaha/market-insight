@@ -12,7 +12,7 @@ export function AuthProvider({children}){
 
     async function checkAuth(){
         try {
-            const res = await fetch('http://localhost:5000/check-auth', {
+            const res = await fetch(`${import.meta.env.VITE_API_URL}/check-auth`, {
                 credentials: 'include'
             });
             const data = await res.json();
@@ -32,7 +32,7 @@ export function AuthProvider({children}){
 
     async function logout(){
         try {
-            await fetch('http://localhost:5000/logout', {
+            await fetch(`${import.meta.env.VITE_API_URL}/logout`, {
                 method: 'POST',
                 credentials: 'include'
             });

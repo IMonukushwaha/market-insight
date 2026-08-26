@@ -20,7 +20,7 @@ export function ChatProvider({ children }) {
   useEffect(() => {
     async function loadRecentChats() {
       try {
-        const res = await fetch("http://localhost:5000/chats", {
+        const res = await fetch(`${import.meta.env.VITE_API_URL}/chats`, {
           credentials: "include",
         });
         if (!res.ok) return; // e.g. 401 if not logged in yet — fail quietly here
@@ -41,7 +41,7 @@ export function ChatProvider({ children }) {
     if (id === chatId) return; // already viewing this chat
     setLoadingChat(true);
     try {
-      const res = await fetch(`http://localhost:5000/chat/${id}`, {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/chat/${id}`, {
         credentials: 'include',
       });
 
@@ -72,7 +72,7 @@ export function ChatProvider({ children }) {
   // also clears the main pane back to a fresh/new-chat state.
   const deleteChat = useCallback(async (id) => {
     try {
-      const res = await fetch(`http://localhost:5000/chat/${id}`, {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/chat/${id}`, {
         method: "DELETE",
         credentials: "include",
       });

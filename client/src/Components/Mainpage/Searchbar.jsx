@@ -26,7 +26,7 @@ export default function Searchbar(){
         }
         setloading(true);
         try{
-            const res = await fetch(`http://localhost:5000/prompt`, {
+            const res = await fetch(`${import.meta.env.VITE_API_URL}/prompt`, {
                 method : 'POST',
                 headers : { "Content-Type": "application/json" },
                 credentials: 'include',

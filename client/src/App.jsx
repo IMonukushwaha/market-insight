@@ -15,7 +15,7 @@ function App() {
   const [data, setdata] = useState(null);
 
   useEffect(()=> {
-    fetch("http://localhost:5000/")
+    fetch(`${import.meta.env.VITE_API_URL}/`)
     .then(res => res.json())
     .then(data => setdata(data))
     .catch(err => console.error(err));
