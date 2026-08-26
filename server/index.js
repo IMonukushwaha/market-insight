@@ -33,8 +33,7 @@ app.use(cors({
 
 app.use(express.json({ limit: '100kb' }));
 
-// Sessions are persisted in MongoDB (via connect-mongo) instead of the
-// default in-memory store
+// Sessions are now persisted in MongoDB (via connect-mongo).
 const sessionOptions = {
     name: 'ctms.sid',
     secret: process.env.Session_Secret,
@@ -46,7 +45,7 @@ const sessionOptions = {
     }),
     cookie: {
         httpOnly: true,
-        sameSite: 'lax',
+        sameSite: NODE_ENV === 'production' ? 'none' : 'lax',
         secure: NODE_ENV === 'production',
         maxAge: 1000 * 60 * 60 * 24 * 7, // 7 days, in ms
     },
