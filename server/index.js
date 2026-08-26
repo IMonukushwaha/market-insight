@@ -26,13 +26,28 @@ async function main() {
 main().then(() => console.log("Connected to my DB"))
     .catch(err => console.log("error", err));
 
+const allowedOrigins = [
+    'http://localhost:5173',
+    process.env.CLIENT_ORIGIN,
+].filter(Boolean);
+
 app.use(cors({
-    origin: 'https://market-insight-tau.vercel.app/',
+    origin: function (origin, callback) {
+        // allow requests with no origin (e.g. curl, server-to-server, some mobile clients)
+        if (!origin || allowedOrigins.includes(origin)) {
+            callback(null, true);
+        } else {
+            callback(new Error(`CORS blocked for origin: ${origin}`));
+        }
+    },
     credentials: true
 }));
 
 app.use(express.json({ limit: '100kb' }));
 
+// Sessions are now persisted in MongoDB (via connect-mongo) instead of the
+// default in-memory store — so logins survive server restarts / nodemon
+// reloads, and this scales past a single server instance.
 const sessionOptions = {
     name: 'ctms.sid',
     secret: process.env.Session_Secret,
