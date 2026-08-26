@@ -27,13 +27,12 @@ main().then(() => console.log("Connected to my DB"))
     .catch(err => console.log("error", err));
 
 app.use(cors({
-    origin: 'http://localhost:5173',
+    origin: 'https://market-insight-tau.vercel.app/',
     credentials: true
 }));
 
 app.use(express.json({ limit: '100kb' }));
 
-// Sessions are now persisted in MongoDB (via connect-mongo).
 const sessionOptions = {
     name: 'ctms.sid',
     secret: process.env.Session_Secret,
