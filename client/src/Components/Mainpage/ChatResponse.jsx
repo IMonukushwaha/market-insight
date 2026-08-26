@@ -2,7 +2,7 @@ import ReactMarkdown from "react-markdown";
 import "../../Style/Mainpagecss/chatresponse.css";
 import useTypewriter from "../Hooks/TypeWriter";
 import { useEffect } from "react";
-import ChartsPanel from "./ChartPanel";
+import ChartsPanel from "./Chartpanel";
 
 export default function ChatResponse({ content, animate, onComplete, chartData }) {
   const { text: typedText, done } = useTypewriter(animate ? content : content, 5, animate);
