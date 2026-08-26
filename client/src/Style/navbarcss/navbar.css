@@ -8,11 +8,16 @@
   background-color: #ffffff;
 }
 
+.navbar-profile{
+  margin-right: 1rem;
+}
+
 .navbar-auth-buttons {
   display: flex;
   flex-direction: row;
   align-items: center;
   gap: 0.6rem;
+  margin-right: 1rem;
 }
  
 .navbar-btn {

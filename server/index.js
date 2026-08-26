@@ -1,49 +1,63 @@
+require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require("cors");
 const session = require('express-session');
+const { MongoStore } = require('connect-mongo');
 const passport = require('passport');
 const LocalStrategy = require('passport-local');
 const User = require('./models/users.js');
 const AppError = require("./utils/ExpressError.js");
 const userRoutes = require('./routes/userroutes.js');
 const chatRoutes = require('./routes/chatroutes.js');
-require('dotenv').config();
 
-const Mongo_url = 'mongodb://127.0.0.1:27017/Market_Insight';
+const Mongo_url = process.env.ATLASDB_URL;
+const NODE_ENV = process.env.NODE_ENV || 'development';
 const app = express();
 let port = 5000;
 
-const sessionOptions = {
-    secret: process.env.Session_Secret,
-    resave: true,
-    saveUninitialized: true,
-    Cookie: {
-        expires: Date.now() + 7 * 24 * 60 * 60 * 1000,
-        maxAge: 7 * 24 * 60 * 60 * 1000,
-        httpOnly: true
-    }
+app.set('trust proxy', 1);
+
+async function main() {
+    console.log("Connecting to database...");
+    await mongoose.connect(Mongo_url);
 }
+
+main().then(() => console.log("Connected to my DB"))
+    .catch(err => console.log("error", err));
 
 app.use(cors({
     origin: 'http://localhost:5173',
     credentials: true
 }));
 
-app.use(express.json());
+app.use(express.json({ limit: '100kb' }));
+
+// Sessions are persisted in MongoDB (via connect-mongo) instead of the
+// default in-memory store
+const sessionOptions = {
+    name: 'ctms.sid',
+    secret: process.env.Session_Secret,
+    resave: false,
+    saveUninitialized: false,
+    store: MongoStore.create({
+        client: mongoose.connection.getClient(),
+        ttl: 60 * 60 * 24 * 7, // 7 days, in seconds
+    }),
+    cookie: {
+        httpOnly: true,
+        sameSite: 'lax',
+        secure: NODE_ENV === 'production',
+        maxAge: 1000 * 60 * 60 * 24 * 7, // 7 days, in ms
+    },
+};
+
 app.use(session(sessionOptions));
 app.use(passport.initialize());
 app.use(passport.session());
 passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
-
-async function main() {
-    await mongoose.connect(Mongo_url);
-}
-
-main().then(() => console.log("Connected to my DB"))
-    .catch(err => console.log("error", err));
 
 app.get("/", (req, res) => {
     res.json({ message: "connected to server" });

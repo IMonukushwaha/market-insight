@@ -8,6 +8,8 @@ router.post('/prompt', requireAuth, wrapAsync(chatcontrollers.Prompt));
 
 router.get('/chat/:chatId', requireAuth, wrapAsync(chatcontrollers.retriveChat));
 
+router.delete('/chat/:chatId', requireAuth, wrapAsync(chatcontrollers.deleteChat));
+
 router.get('/chats', requireAuth, wrapAsync(chatcontrollers.retriveRecentChatTitles));
 
 module.exports = router;

@@ -20,6 +20,11 @@
   margin: 0.25rem 0 0.5rem 0;
 }
 
+.recent-chat-row{
+  display: flex;
+  flex-direction: row;
+}
+
 .recent-chat-item {
   display: block;
   width: 100%;
@@ -44,4 +49,26 @@
  
 .recent-chat-item:active {
   background-color: #e5e7eb;
+}
+
+.recent-delete-item {
+  flex-shrink: 0;
+  background-color: transparent;
+  border: none;
+  border-radius: 0.5rem;
+  padding: 0.4rem 0.55rem;
+  font-size: 0.78rem;
+  font-family: inherit;
+  color: #dc2626;
+  cursor: pointer;
+  transition: background-color 0.15s ease, color 0.15s ease, opacity 0.15s ease;
+}
+
+.recent-delete-item:hover {
+  background-color: #fee2e2;
+  color: #dc2626;
+}
+
+.recent-delete-item:active {
+  background-color: #fecaca;
 }

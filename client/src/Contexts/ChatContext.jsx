@@ -8,8 +8,6 @@ export function ChatProvider({ children }) {
   const [recentChats, setRecentChats] = useState([]); // [{ _id, title }]
 
   // Called by NewChat button — clears the active conversation.
-  // No entry is added to recentChats yet; that happens once the
-  // first message actually creates a chat on the backend (see addMessage).
   const startNewChat = useCallback(() => {
     setChatId(null);
     setMessages([]);
@@ -52,9 +50,16 @@ export function ChatProvider({ children }) {
         return;
       }
 
+      // selectChat — loaded history, no animation
       const data = await res.json();
       setChatId(data.chatId);
-      setMessages(data.messages || []);
+      setMessages(
+        (data.messages || []).map((m) => ({
+          ...m,
+          chartData: m.chartData || null, // carry over stored chart data from DB
+          isNew: false,
+        }))
+      );
     } catch (err) {
       console.error('Error loading chat:', err);
     } finally {
@@ -62,11 +67,43 @@ export function ChatProvider({ children }) {
     }
   }, [chatId]);
 
+  // Called by the Delete button in Recents — removes a chat from the backend
+  // and from the sidebar list. If the deleted chat is the one currently open,
+  // also clears the main pane back to a fresh/new-chat state.
+  const deleteChat = useCallback(async (id) => {
+    try {
+      const res = await fetch(`http://localhost:5000/chat/${id}`, {
+        method: "DELETE",
+        credentials: "include",
+      });
+
+      if (!res.ok) {
+        console.error("Failed to delete chat", await res.text());
+        return;
+      }
+
+      setRecentChats((prev) => prev.filter((c) => c._id !== id));
+
+      setChatId((currChatId) => {
+        if (currChatId === id) {
+          setMessages([]);
+          return null;
+        }
+        return currChatId;
+      });
+    } catch (err) {
+      console.error("Error deleting chat:", err);
+    }
+  }, []);
+
   // Called after a successful /getprompt response.
   // Appends the message AND upserts this chat into the recents list
   // (adds it once, with the real title, first time we see this chatId).
-  const addMessage = useCallback((prompt, response, type, newChatId, title) => {
-    setMessages((prev) => [...prev, { prompt, response, type }]);
+  const addMessage = useCallback((prompt, response, newChatId, title, chartData) => {
+    setMessages((prev) => [
+      ...prev,
+      { prompt, response, chartData: chartData || null, isNew: true },
+    ]);
 
     if (newChatId) {
       setChatId(newChatId);
@@ -78,6 +115,13 @@ export function ChatProvider({ children }) {
     }
   }, []);
 
+  // New: called once a message's typewriter animation finishes
+  const markMessageComplete = useCallback((index) => {
+    setMessages((prev) =>
+      prev.map((m, i) => (i === index ? { ...m, isNew: false } : m))
+    );
+  }, []);
+
   const value = {
     chatId,
     messages,
@@ -86,7 +130,9 @@ export function ChatProvider({ children }) {
     startNewChat,
     selectChat,
     addMessage,
+    deleteChat,
     setMessages,
+    markMessageComplete,
   };
 
   return <ChatContext.Provider value={value}>{children}</ChatContext.Provider>;

@@ -24,7 +24,7 @@ export default function NewChat(){
             <AddIcon/>
         </div>
         <div className="profile-name">
-            <p>New Chat</p>
+            <p>New Search</p>
         </div>
     </button>
     </>

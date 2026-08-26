@@ -45,8 +45,8 @@ export default function Searchbar(){
             const data = await res.json();
             console.log('API response:', data);
 
-            // pushes message into chat
-            addMessage(prompt, data.response, data.type, data.chatId, data.title);
+            // pushes message into chat, now including chartData for rendering the chart
+            addMessage(prompt, data.response, data.chatId, data.title, data.chartData);
 
             setPrompt("");
 

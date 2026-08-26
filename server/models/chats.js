@@ -5,6 +5,7 @@ const messageSchema = new Schema(
   {
     prompt: { type: String, required: true },
     response: { type: String, required: true },
+    chartData: { type: Schema.Types.Mixed, default: null },
   },
   { timestamps: true }
 );

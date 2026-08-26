@@ -24,13 +24,22 @@ module.exports.Prompt = async (req, res) => {
         });
     }
 
-    const reply = await getResponse(chat._id.toString(), prompt);
+    const { reply, chartData } = await getResponse(chat._id.toString(), prompt);
 
     res.status(200).json({
         chatId: chat._id,
         response: reply,
+        chartData,
         title: chat.title,
     });
+}
+
+module.exports.retriveRecentChatTitles = async (req, res) => {
+    const chats = await Chat.find({ user: req.user._id })
+        .select('_id title updatedAt')
+        .sort({ updatedAt: -1 });
+
+    res.status(200).json({ chats });
 }
 
 module.exports.retriveChat = async (req, res) => {
@@ -53,10 +62,21 @@ module.exports.retriveChat = async (req, res) => {
     });
 }
 
-module.exports.retriveRecentChatTitles = async (req, res) => {
-    const chats = await Chat.find({ user: req.user._id })
-        .select('_id title updatedAt')
-        .sort({ updatedAt: -1 });
+module.exports.deleteChat = async (req, res) => {
+    const { chatId } = req.params;
 
-    res.status(200).json({ chats });
+    if (!mongoose.Types.ObjectId.isValid(chatId)) {
+        throw new AppError(400, 'Invalid chat id');
+    }
+
+    const chat = await Chat.findOneAndDelete({ _id: chatId, user: req.user._id });
+
+    if (!chat) {
+        throw new AppError(404, 'Chat not found');
+    }
+
+    res.status(200).json({
+        chatId: chat._id,
+        message: 'Chat deleted',
+    });
 }
