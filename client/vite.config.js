@@ -7,14 +7,6 @@ export default defineConfig({
     include: ['recharts'],
   },
   build: {
-    rollupOptions: {
-      output: {
-        manualChunks(id) {
-          if (id.includes('node_modules/recharts')) {
-            return 'recharts'
-          }
-        },
-      },
-    },
+    chunkSizeWarningLimit: 1000, // just silences the "chunk too large" warning
   },
 })
