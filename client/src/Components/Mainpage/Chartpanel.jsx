@@ -6,6 +6,7 @@ import OwnershipBreakdownChart from "./Ownershipbreakdownchart";
 
 export default function ChartsPanel({ chartData }) {
   if (!chartData) return null;
+  console.log("chartData received:", chartData);
 
   return (
     <div className="charts-panel">

@@ -1,4 +1,3 @@
-import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid, Legend } from "recharts";
 import { formatCompactCurrency } from "./Formatcompactnumber";
 import "../../Style/Mainpagecss/stockchart.css";
 
