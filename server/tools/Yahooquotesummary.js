@@ -1,9 +1,6 @@
 const axios = require('axios');
 const { getYahooCrumb } = require('./yahooAuth');
 
-// All the modules previously fetched via 9 SEPARATE quoteSummary requests,
-// now combined into ONE request. Yahoo's endpoint supports comma-separated
-// modules.
 const MODULES = [
   'financialData',
   'incomeStatementHistory',
@@ -40,7 +37,8 @@ function cleanEntry(entry) {
   return cleaned;
 }
 
-// Individual section parsers, each mirroring the original tool file's shape
+// ---- Individual section parsers, each mirroring the original tool file's shape ----
+
 function parseBalanceSheet(financialData) {
   if (!financialData) return 'No balance sheet available';
   return {
@@ -226,44 +224,63 @@ function parseAnalystRecommendationsSummary(recommendationTrend) {
   }));
 }
 
-//Single entry point: one HTTP request, all sections parsed.
-async function getQuoteSummaryData(ticker) {
+// ---- Single entry point: one HTTP request, all sections parsed ----
+
+async function getQuoteSummaryData(ticker, retries = 2) {
   if (!ticker || typeof ticker !== 'string') {
     throw new Error('Invalid ticker provided.');
   }
 
   const { crumb, cookie } = await getYahooCrumb();
 
-  const response = await axios.get(
-    `https://query2.finance.yahoo.com/v10/finance/quoteSummary/${ticker}`,
-    {
-      params: { modules: MODULES, crumb },
-      headers: {
-        'User-Agent':      'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
-        'Accept':          'application/json',
-        'Accept-Language': 'en-US,en;q=0.5',
-        'Cookie':          cookie,
-      },
+  for (let attempt = 0; attempt <= retries; attempt++) {
+    try {
+      const response = await axios.get(
+        `https://query2.finance.yahoo.com/v10/finance/quoteSummary/${ticker}`,
+        {
+          params: { modules: MODULES, crumb },
+          headers: {
+            'User-Agent':      'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+            'Accept':          'application/json',
+            'Accept-Language': 'en-US,en;q=0.5',
+            'Cookie':          cookie,
+          },
+        }
+      );
+
+      const result = response.data.quoteSummary.result?.[0];
+      if (!result) {
+        throw new Error(`No quoteSummary data available for ${ticker}`);
+      }
+
+      return {
+        balanceSheet:                   parseBalanceSheet(result.financialData),
+        incomeStatement:                parseIncomeStatement(ticker, result.incomeStatementHistory, result.incomeStatementHistoryQuarterly),
+        cashFlow:                       parseCashFlow(ticker, result.cashflowStatementHistory, result.cashflowStatementHistoryQuarterly),
+        companyInfo:                    parseCompanyInfo(result.assetProfile, result.summaryDetail, result.defaultKeyStatistics, result.price),
+        institutionalHolders:           parseInstitutionalHolders(result.institutionOwnership),
+        majorShareholders:              parseMajorShareholders(result.majorHoldersBreakdown),
+        mutualFundHolders:              parseMutualFundHolders(result.fundOwnership),
+        insiderTransactions:            parseInsiderTransactions(result.insiderTransactions),
+        analystRecommendations:         parseAnalystRecommendations(result.upgradeDowngradeHistory),
+        analystRecommendationsSummary:  parseAnalystRecommendationsSummary(result.recommendationTrend),
+      };
+    } catch (err) {
+      const status = err.response?.status;
+      const isRateLimited = status === 429;
+      const isLastAttempt = attempt === retries;
+
+      if (isRateLimited && !isLastAttempt) {
+        // Exponential backoff: 1s, then 2s, then 4s...
+        const delay = 1000 * Math.pow(2, attempt);
+        console.log(`Rate limited by Yahoo (429) for ${ticker}, retrying in ${delay}ms... (attempt ${attempt + 1}/${retries})`);
+        await new Promise((res) => setTimeout(res, delay));
+        continue;
+      }
+
+      throw err;
     }
-  );
-
-  const result = response.data.quoteSummary.result?.[0];
-  if (!result) {
-    throw new Error(`No quoteSummary data available for ${ticker}`);
   }
-
-  return {
-    balanceSheet:                   parseBalanceSheet(result.financialData),
-    incomeStatement:                parseIncomeStatement(ticker, result.incomeStatementHistory, result.incomeStatementHistoryQuarterly),
-    cashFlow:                       parseCashFlow(ticker, result.cashflowStatementHistory, result.cashflowStatementHistoryQuarterly),
-    companyInfo:                    parseCompanyInfo(result.assetProfile, result.summaryDetail, result.defaultKeyStatistics, result.price),
-    institutionalHolders:           parseInstitutionalHolders(result.institutionOwnership),
-    majorShareholders:              parseMajorShareholders(result.majorHoldersBreakdown),
-    mutualFundHolders:               parseMutualFundHolders(result.fundOwnership),
-    insiderTransactions:            parseInsiderTransactions(result.insiderTransactions),
-    analystRecommendations:         parseAnalystRecommendations(result.upgradeDowngradeHistory),
-    analystRecommendationsSummary:  parseAnalystRecommendationsSummary(result.recommendationTrend),
-  };
 }
 
 module.exports = { getQuoteSummaryData };
