@@ -7,10 +7,6 @@ const { SYSTEM_PROMPT_Market_Insight } = require('../chatdata/history');
 const Groq = require("groq-sdk");
 const groq = new Groq({ apiKey: process.env.GROQ_AI_KEY });
 
-// Pulls out only the small set of numbers the LLM needs to write a
-// natural-language summary — keeps the prompt well under the TPM limit.
-// Everything else (full price history, all news, holders, etc.) still goes
-// to the frontend untouched via `chartData` for charting.
 function extractKeyMetrics(ticker, data) {
   const price = typeof data.price === 'number' ? data.price : null;
   const hist = data.history && typeof data.history === 'object' ? data.history : null;
