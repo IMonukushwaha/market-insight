@@ -1,9 +1,3 @@
-// parseCompanyReport.js
-// Converts the markdown-style company report string (from companydata())
-// into a clean structured JS object usable for both:
-//   1) a small metrics slice to send to the LLM
-//   2) full structured data to send to the frontend for charts
-
 function extractValue(text, label) {
   // Matches "| Label | Value |" rows, tolerant of unicode dashes/spaces
   const re = new RegExp(`\\|\\s*${label}\\s*\\|\\s*([^|]+?)\\s*\\|`, 'i');

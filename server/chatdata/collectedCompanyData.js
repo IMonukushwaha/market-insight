@@ -1,7 +1,7 @@
 const { getStockPrice } = require('../tools/stockprice.js');
 const { getStockHistory } = require('../tools/stockhistory.js');
 const { getStockNews } = require('../tools/stocknews.js');
-const { getQuoteSummaryData } = require('../tools/yahooQuoteSummary.js');
+const { getQuoteSummaryData } = require('../tools/Yahooquotesummary.js');
 
 module.exports.companydata = async (ticker) => {
   console.log(`\n Fetching all data for ${ticker}...`);
