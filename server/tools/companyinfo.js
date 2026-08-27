@@ -1,8 +1,6 @@
 const axios = require('axios');
 const { getYahooCrumb } = require('./yahooAuth');
 
-// Cap how much of the free-text business description is kept -- the full
-// field can run 1500+ characters and adds little value for a quick answer.
 const MAX_SUMMARY_CHARS = 300;
 
 async function getCompanyInfo(ticker) {

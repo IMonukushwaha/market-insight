@@ -1,35 +1,69 @@
 const axios = require('axios');
 
-let cached = null; // { crumb, cookie, expiresAt }
+const USER_AGENT =
+  'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36';
+
+let cached = null;
+let cachedAt = 0;
+const CACHE_TTL_MS = 25 * 60 * 1000; // 25 minutes
+
+const ALLOWED_COOKIE_NAMES = ['A1', 'A3', 'A1S', 'B', 'T'];
+
+function filterCookies(setCookieHeaders) {
+  const kept = [];
+  for (const raw of setCookieHeaders) {
+    const pair = raw.split(';')[0]; // "Name=Value"
+    const name = pair.split('=')[0];
+    if (ALLOWED_COOKIE_NAMES.includes(name)) {
+      kept.push(pair);
+    }
+  }
+  return kept.join('; ');
+}
 
 async function getYahooCrumb() {
-  if (cached && cached.expiresAt > Date.now()) {
-    return { crumb: cached.crumb, cookie: cached.cookie };
+  const now = Date.now();
+  if (cached && now - cachedAt < CACHE_TTL_MS) {
+    return cached;
   }
 
-  const warmup = await axios.get('https://fc.yahoo.com', {
-    headers: { 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36' },
-  });
-  const warmupCookie = warmup.headers['set-cookie']?.map(c => c.split(';')[0]).join('; ') || '';
-
-  // Step 2: use that cookie to request the crumb
-  const response = await axios.get('https://query1.finance.yahoo.com/v1/test/getcrumb', {
+  // Step 1: hit a normal Yahoo Finance page to establish a session cookie
+  const sessionResponse = await axios.get('https://finance.yahoo.com', {
     headers: {
-      'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
-      'Cookie': warmupCookie,
+      'User-Agent': USER_AGENT,
+      'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+      'Accept-Language': 'en-US,en;q=0.5',
     },
   });
 
-  const crumb = response.data;
-  const crumbCookie = response.headers['set-cookie']?.map(c => c.split(';')[0]).join('; ') || warmupCookie;
+  const sessionCookies = sessionResponse.headers['set-cookie'];
+  if (!sessionCookies || sessionCookies.length === 0) {
+    throw new Error('Failed to establish Yahoo Finance session — no cookies returned.');
+  }
 
-  cached = {
-    crumb,
-    cookie: crumbCookie,
-    expiresAt: Date.now() + 30 * 60 * 1000, // reuse for 30 min
-  };
+  const cookieHeader = filterCookies(sessionCookies);
+  if (!cookieHeader) {
+    throw new Error('Failed to establish Yahoo Finance session — no usable auth cookies found.');
+  }
 
-  return { crumb, cookie: crumbCookie };
+  // Step 2: use the filtered cookie set to request a valid crumb
+  const crumbResponse = await axios.get('https://query1.finance.yahoo.com/v1/test/getcrumb', {
+    headers: {
+      'User-Agent': USER_AGENT,
+      'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+      'Accept-Language': 'en-US,en;q=0.5',
+      'Cookie': cookieHeader,
+    },
+  });
+
+  const crumb = crumbResponse.data;
+  if (!crumb || typeof crumb !== 'string' || crumb.includes('<html')) {
+    throw new Error('Failed to retrieve a valid Yahoo crumb.');
+  }
+
+  cached = { crumb, cookie: cookieHeader };
+  cachedAt = now;
+  return cached;
 }
 
 module.exports = { getYahooCrumb };
