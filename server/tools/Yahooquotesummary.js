@@ -1,4 +1,4 @@
-const axios = require('axios');
+const { yahooClient } = require('./yahooHttpClient');
 const { getYahooCrumb } = require('./yahooAuth');
 
 const MODULES = [
@@ -235,7 +235,7 @@ async function getQuoteSummaryData(ticker, retries = 2) {
 
   for (let attempt = 0; attempt <= retries; attempt++) {
     try {
-      const response = await axios.get(
+      const response = await yahooClient.get(
         `https://query2.finance.yahoo.com/v10/finance/quoteSummary/${ticker}`,
         {
           params: { modules: MODULES, crumb },

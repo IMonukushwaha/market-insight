@@ -1,4 +1,4 @@
-const axios = require('axios');
+const { yahooClient } = require('./yahooHttpClient');
 
 const USER_AGENT =
   'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36';
@@ -12,7 +12,7 @@ const ALLOWED_COOKIE_NAMES = ['A1', 'A3', 'A1S', 'B', 'T'];
 function filterCookies(setCookieHeaders) {
   const kept = [];
   for (const raw of setCookieHeaders) {
-    const pair = raw.split(';')[0]; // "Name=Value"
+    const pair = raw.split(';')[0];
     const name = pair.split('=')[0];
     if (ALLOWED_COOKIE_NAMES.includes(name)) {
       kept.push(pair);
@@ -27,8 +27,7 @@ async function getYahooCrumb() {
     return cached;
   }
 
-  // Step 1: hit a normal Yahoo Finance page to establish a session cookie
-  const sessionResponse = await axios.get('https://finance.yahoo.com', {
+  const sessionResponse = await yahooClient.get('https://finance.yahoo.com', {
     headers: {
       'User-Agent': USER_AGENT,
       'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
@@ -46,8 +45,7 @@ async function getYahooCrumb() {
     throw new Error('Failed to establish Yahoo Finance session — no usable auth cookies found.');
   }
 
-  // Step 2: use the filtered cookie set to request a valid crumb
-  const crumbResponse = await axios.get('https://query1.finance.yahoo.com/v1/test/getcrumb', {
+  const crumbResponse = await yahooClient.get('https://query1.finance.yahoo.com/v1/test/getcrumb', {
     headers: {
       'User-Agent': USER_AGENT,
       'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',

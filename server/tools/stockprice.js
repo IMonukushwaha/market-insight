@@ -1,16 +1,14 @@
-const axios = require('axios');
+const { yahooClient } = require('./yahooHttpClient');
 
 async function getStockPrice(ticker){
     console.log(`Retrieving Stock Price of ${ticker}...`);
 
-    // Validate ticker
-    // return error if ticker if either empty or not  a string
     if (!ticker || typeof ticker !== 'string') {
         return 'Error: Invalid ticker provided. Please provide a valid ticker symbol.';
     }
 
     try {
-    const response = await axios.get(
+    const response = await yahooClient.get(
       `https://query2.finance.yahoo.com/v8/finance/chart/${ticker}`,
       {
         params: {
@@ -18,7 +16,6 @@ async function getStockPrice(ticker){
           range:    '1d',
         },
         headers: {
-          // Required — Yahoo blocks requests without a user agent
           'User-Agent': 'Mozilla/5.0',
         },
       }
