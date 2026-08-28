@@ -37,6 +37,11 @@ async function getYahooCrumb() {
 
   const sessionCookies = sessionResponse.headers['set-cookie'];
   if (!sessionCookies || sessionCookies.length === 0) {
+    // Temporary diagnostics — shows what Yahoo actually sent back through
+    // the proxy, so we can tell a real block/captcha apart from something else.
+    console.log('DEBUG — Yahoo session response status:', sessionResponse.status);
+    console.log('DEBUG — Yahoo session response headers:', JSON.stringify(sessionResponse.headers, null, 2));
+    console.log('DEBUG — Yahoo session response body (first 500 chars):', String(sessionResponse.data).slice(0, 500));
     throw new Error('Failed to establish Yahoo Finance session — no cookies returned.');
   }
 
