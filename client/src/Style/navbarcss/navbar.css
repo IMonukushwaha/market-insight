@@ -6,6 +6,8 @@
   padding: 0.9rem 1.5rem;
   border-bottom: 1px solid #c4d3f0;
   background-color: #ffffff;
+  flex: 1;
+  min-width: 0;
 }
 
 .navbar-profile{
@@ -49,4 +51,24 @@
  
 .navbar-signup-btn:hover {
   background-color: #1f2937;
+}
+
+@media (max-width: 480px) {
+  .navbar {
+    padding: 0.65rem 0.75rem;
+  }
+  .navbar-profile {
+    margin-right: 0.4rem;
+  }
+  .navbar-auth-buttons {
+    gap: 0.4rem;
+    margin-right: 0.4rem;
+  }
+  .navbar-btn {
+    font-size: 0.82rem;
+    padding: 0.4rem 0.75rem;
+  }
+  .navbar-signup-btn {
+    margin-right: 0;
+  }
 }

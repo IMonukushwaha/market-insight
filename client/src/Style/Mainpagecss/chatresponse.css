@@ -62,3 +62,18 @@
     border-radius: 3px;
     font-size: 13px;
 }
+
+@media (max-width: 480px) {
+  .chat-response {
+    font-size: 14px;
+    max-width: 100%;
+  }
+  .chat-response h1 { font-size: 17px; }
+  .chat-response h2 { font-size: 15.5px; }
+  .chat-response h3 { font-size: 14px; }
+  .chat-response p,
+  .chat-response li {
+    overflow-wrap: break-word;
+    word-break: break-word;
+  }
+}

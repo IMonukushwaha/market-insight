@@ -66,3 +66,20 @@
 .login-signup-link a:hover {
   text-decoration: underline;
 }
+
+@media (max-width: 480px) {
+  .login-form {
+    max-width: 100%;
+    margin: 1.5rem 1rem;
+    padding: 1.5rem 1.25rem;
+    border-radius: 0.85rem;
+  }
+  .login-title {
+    font-size: 1.25rem;
+  }
+  /* Inputs at 16px prevent iOS Safari's automatic zoom-in on focus */
+  .login-group input {
+    font-size: 1rem;
+    padding: 0.7rem 0.85rem;
+  }
+}

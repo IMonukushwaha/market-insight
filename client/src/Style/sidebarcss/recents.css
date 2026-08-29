@@ -72,3 +72,16 @@
 .recent-delete-item:active {
   background-color: #fecaca;
 }
+
+@media (max-width: 480px) {
+  .recents-box {
+    padding: 0.4rem 0.5rem;
+  }
+  .recent-chat-item {
+    font-size: 0.85rem;
+    padding: 0.55rem 0.5rem;
+  }
+  .recent-delete-item {
+    padding: 0.45rem 0.55rem;
+  }
+}

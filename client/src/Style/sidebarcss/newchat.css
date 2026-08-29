@@ -35,3 +35,13 @@
   font-weight: 500;
   color: #0b0d10;
 }
+
+@media (max-width: 480px) {
+  .newchat-box {
+    padding: 0.55rem 0.6rem;
+    gap: 0.5rem;
+  }
+  .newchat-box .profile-name p {
+    font-size: 0.88rem;
+  }
+}

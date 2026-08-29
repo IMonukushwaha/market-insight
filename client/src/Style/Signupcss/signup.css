@@ -49,3 +49,19 @@
   margin-top: 0.5rem;
   justify-content: flex-end;
 }
+
+@media (max-width: 480px) {
+  .signup-form {
+    max-width: 100%;
+    margin: 1.5rem 1rem;
+    padding: 1.5rem 1.25rem;
+    border-radius: 0.85rem;
+  }
+  .signup-title {
+    font-size: 1.25rem;
+  }
+  .form-group input {
+    font-size: 1rem;
+    padding: 0.7rem 0.85rem;
+  }
+}

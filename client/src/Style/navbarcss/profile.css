@@ -45,3 +45,21 @@
     background-color: #d33;
     color: #fff;
 }
+
+@media (max-width: 480px) {
+  .profile-box {
+    gap: 0.4rem;
+    padding: 0.4rem 0.5rem;
+  }
+  .icon {
+    font-size: 1.25rem;
+  }
+  .profile-name span {
+    font-size: 0.85rem;
+  }
+  .btn-logout button {
+    padding: 5px 10px;
+    font-size: 12px;
+    margin-right: 0.5rem;
+  }
+}

@@ -20,10 +20,6 @@
   to   { opacity: 1; transform: translateY(0); }
 }
 
-/* User prompt — now aligned to the LEFT (start of the chat flow)
-   instead of the right, per request. Styled as a subtle pill rather
-   than a heavy chat bubble, so it reads as "the question that was
-   asked" rather than mimicking a two-sided messaging app. */
 .prompt {
   align-self: flex-start;
   background-color: #eef2ff;
@@ -36,6 +32,8 @@
   font-weight: 600;
   line-height: 1.4;
   margin: 0;
+  overflow-wrap: break-word;
+  word-break: break-word;
 }
 
 /* AI response — full width, no bubble, generous line-height for
@@ -106,6 +104,7 @@
   border-radius: 0.6rem;
   overflow-x: auto;
   margin: 0 0 0.85rem;
+  -webkit-overflow-scrolling: touch;
 }
 
 .chat-response pre code {
@@ -147,12 +146,31 @@
   text-underline-offset: 2px;
 }
 
-/* Small responsive nicety — a bit less padding on narrow screens */
+@media (max-width: 768px) {
+  .response_container {
+    padding: 1.5rem 1rem 2.5rem;
+    gap: 1.5rem;
+  }
+}
+
 @media (max-width: 480px) {
   .response_container {
     padding: 1.25rem 0.9rem 2.5rem;
+    gap: 1.25rem;
   }
   .prompt {
     max-width: 92%;
+    font-size: 0.9rem;
+    padding: 0.5rem 0.85rem;
+  }
+  .ai_res,
+  .chat-response {
+    font-size: 0.9rem;
+  }
+  .chat-response table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+    -webkit-overflow-scrolling: touch;
   }
 }

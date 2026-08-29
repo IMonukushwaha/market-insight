@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react'
 import { Routes, Route } from "react-router-dom"
+import MenuIcon from '@mui/icons-material/Menu'
+import CloseIcon from '@mui/icons-material/Close'
 import './App.css'
-import Response from './Components/Mainpage/Response'
 import NewChat from './Components/Sidebar/NewChat'
 import Recents from './Components/Sidebar/Recents'
 import Chatarea from './Components/Mainpage/Chatarea'
@@ -13,12 +14,13 @@ import { ChatProvider } from './Contexts/ChatContext'
 
 function App() {
   const [data, setdata] = useState(null);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
-  useEffect(()=> {
+  useEffect(() => {
     fetch(`${import.meta.env.VITE_API_URL}/`)
-    .then(res => res.json())
-    .then(data => setdata(data))
-    .catch(err => console.error(err));
+      .then(res => res.json())
+      .then(data => setdata(data))
+      .catch(err => console.error(err));
   }, [])
 
   return (
@@ -31,12 +33,33 @@ function App() {
           <ChatProvider>
             <div className="Interface">
               <div className='navbar-box'>
-                <Navbar/>
+                {}
+                <button
+                  className="sidebar-toggle-btn"
+                  onClick={() => setSidebarOpen(true)}
+                  aria-label="Open menu"
+                >
+                  <MenuIcon />
+                </button>
+                <Navbar />
               </div>
               <div className="content-row">
-                <div className="sidebar-box">
-                  <NewChat />
-                  <Recents />
+                {sidebarOpen && (
+                  <div
+                    className="sidebar-backdrop"
+                    onClick={() => setSidebarOpen(false)}
+                  />
+                )}
+                <div className={`sidebar-box ${sidebarOpen ? "open" : ""}`}>
+                  <button
+                    className="sidebar-close-btn"
+                    onClick={() => setSidebarOpen(false)}
+                    aria-label="Close menu"
+                  >
+                    <CloseIcon fontSize="small" />
+                  </button>
+                  <NewChat onNavigate={() => setSidebarOpen(false)} />
+                  <Recents onNavigate={() => setSidebarOpen(false)} />
                 </div>
                 <div className="mainbar-box">
                   <Chatarea />
@@ -46,7 +69,7 @@ function App() {
           </ChatProvider>
         }
       />
-      <Route path="*" element={<Errorpage/>} />
+      <Route path="*" element={<Errorpage />} />
     </Routes>
   )
 }

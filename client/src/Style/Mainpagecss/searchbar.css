@@ -56,6 +56,7 @@
     background: transparent;
     font-size: 16px;
     color: #111827;
+    min-width: 0;
 }
 
 .search-input::placeholder {
@@ -74,6 +75,7 @@
     font-weight: 500;
     color: #6366f1;
     white-space: nowrap;
+    flex-shrink: 0;
 }
 
 .search-loading::before {
@@ -88,4 +90,27 @@
 
 @keyframes search-spin {
     to { transform: rotate(360deg); }
+}
+
+@media (max-width: 480px) {
+  .search-box {
+    padding: 10px 14px;
+    gap: 8px;
+  }
+  .search-icon-wrap {
+    width: 26px;
+    height: 26px;
+  }
+
+  .search-input {
+    font-size: 16px;
+  }
+  .search-loading {
+    font-size: 0;
+    gap: 0;
+  }
+  .search-loading::before {
+    width: 14px;
+    height: 14px;
+  }
 }

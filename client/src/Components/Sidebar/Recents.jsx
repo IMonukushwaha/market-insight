@@ -2,10 +2,15 @@ import "../../Style/sidebarcss/recents.css"
 import { useChat } from "../../Contexts/ChatContext";
 import { Fragment } from "react";
 
-export default function Recents(){
+export default function Recents({ onNavigate }) {
 
     const { recentChats, chatId, selectChat, deleteChat } = useChat();
-    
+
+    function handleSelect(id) {
+        selectChat(id);
+        onNavigate?.(); // closes the mobile sidebar drawer, no-op on desktop
+    }
+
     return (
         <div className="recents-box">
             <p className="recents-title">Recent Searches</p>
@@ -17,7 +22,7 @@ export default function Recents(){
                     <div className="recent-chat-row" key={chat._id}>
                         <button
                             className={`recent-chat-item ${chat._id === chatId ? "active" : ""}`}
-                            onClick={() => selectChat(chat._id)}
+                            onClick={() => handleSelect(chat._id)}
                         >
                             {chat.title}
                         </button>

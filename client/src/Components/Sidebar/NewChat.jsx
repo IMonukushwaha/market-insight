@@ -4,7 +4,7 @@ import { useChat } from "../../Contexts/ChatContext";
 import { useAuth } from '../../Contexts/AuthContext';
 import { useNavigate } from "react-router-dom"
 
-export default function NewChat(){
+export default function NewChat({ onNavigate }) {
 
     const { startNewChat } = useChat();
     const { currentUser } = useAuth();
@@ -16,6 +16,7 @@ export default function NewChat(){
             return;
         }
         startNewChat();
+        onNavigate?.(); // closes the mobile sidebar drawer, no-op on desktop
     }
 
     return<>
