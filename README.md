@@ -7,7 +7,6 @@ Market Insights is a full-stack web application that gives users instant, AI-gen
 - AI-Powered Chat — Grok chatbot generates natural-language financial summaries
 - Real-Time Market Data — Stock price, 52-week high/low and more via Yahoo Finance API
 - Interactive Financial Charts — Visualize stock price trends, historical performance, and key financial metrics through interactive charts
-- Financial Statements — Balance sheet and income statement breakdowns including cash position, debt, revenue, net income, and margins
 - Institutional Holders — View major shareholders and institutional holdings for a company
 - Chat History — Recent chats are saved and accessible from the sidebar for each unique user
 - User Authentication — Login/logout with secure session-based user accounts
