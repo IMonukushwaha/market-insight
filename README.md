@@ -74,8 +74,8 @@ Market_insight/
 | `/api/users/check-auth` | GET | Check if user session is authenticated |
 | `/api/users/logout` | POST | Log out the current user |
 | `/api/chat/prompt` | POST | Send a prompt to generate a market insight (Grok) |
-| `/api/chat/chat/:chatId` | GET | Retrieve a specific chat by ID |
-| `/api/chat/chat/:chatId` | DELETE | Delete a specific chat by ID |
+| `/api/chat/:chatId` | GET | Retrieve a specific chat by ID |
+| `/api/chat/:chatId` | DELETE | Delete a specific chat by ID |
 | `/api/chat/chats` | GET | Retrieve all recent chat titles for the logged-in user |
 
 
