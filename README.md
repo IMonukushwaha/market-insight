@@ -5,7 +5,6 @@ Market Insights is a full-stack web application for exploring public companies t
 ## Features
 
 - Search for a public company and generate a financial insight report.
-- Ask follow-up questions in an AI-powered chat using the Groq API.
 - View current market data and company information from Yahoo Finance.
 - Explore stock, financial statement, ownership, institutional holder, and analyst recommendation charts.
 - Save chat history for each account.
@@ -100,7 +99,7 @@ The Express server exposes these routes at its root URL (there is no `/api` pref
 | `/login` | POST | Authenticate a user and set the auth cookie |
 | `/check-auth` | GET | Return the current authenticated user |
 | `/logout` | POST | Clear the auth cookie |
-| `/prompt` | POST | Generate a company insight and start or continue a chat |
+| `/prompt` | POST | Generate a company insight |
 | `/chat/:chatId` | GET | Retrieve a chat |
 | `/chat/:chatId` | DELETE | Delete a chat |
 | `/chats` | GET | List recent chat titles for the current user |
