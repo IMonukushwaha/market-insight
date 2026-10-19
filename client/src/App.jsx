@@ -7,7 +7,6 @@ import NewChat from './Components/Sidebar/NewChat'
 import Recents from './Components/Sidebar/Recents'
 import Chatarea from './Components/Mainpage/Chatarea'
 import Signup from './Components/Signup/Signup'
-import VerifyEmail from './Components/Signup/VerifyEmail'
 import Login from './Components/Login/Login'
 import Landing from './Components/Landing/Landing'
 import Logo from './Components/Navbar/Logo'
@@ -78,7 +77,6 @@ function AppRoutes() {
       <Route path="/" element={<Landing />} />
       <Route path="/login" element={<Login />} />
       <Route path="/signup" element={<Signup />} />
-      <Route path="/verify-email" element={<VerifyEmail />} />
       <Route path="/search" element={<SearchWorkspace />} />
       <Route path="*" element={<Errorpage />} />
     </Routes>

@@ -1,10 +1,13 @@
 import { useState } from "react"
-import { Link } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
+import { useAuth } from "../../Contexts/AuthContext";
 import "../../Style/Signupcss/signup.css"
 
 export default function Signup(){
+    const { setCurrentUser } = useAuth();
+    const navigate = useNavigate();
     const [formdata, setFormdata] = useState({
         username: "",
         email: "",
@@ -12,7 +15,6 @@ export default function Signup(){
     })
 
     const [error, setError] = useState("");
-    const [submittedEmail, setSubmittedEmail] = useState("");
     const [loading, setLoading] = useState(false);
     const [validated, setValidated] = useState(false);
 
@@ -51,7 +53,8 @@ export default function Signup(){
                 return;
             }
 
-            setSubmittedEmail(formdata.email);
+            setCurrentUser(data.user);
+            navigate("/search", { replace: true });
 
         } catch (err) {
             console.log(err);
@@ -66,14 +69,6 @@ export default function Signup(){
             <h2 className="signup-title">Create an account</h2>
 
             {error && <p className="signup-error">{error}</p>}
-
-            {submittedEmail ? (
-                <div className="signup-success" role="status">
-                    <p>We sent a verification link to <strong>{submittedEmail}</strong>.</p>
-                    <p>Open the link within 24 hours to activate your account.</p>
-                    <Link to="/login">Return to login</Link>
-                </div>
-            ) : <>
 
             <Form.Group className="form-group" controlId="username">
                 <Form.Label>Username</Form.Label>
@@ -123,9 +118,8 @@ export default function Signup(){
             </Form.Group>
 
             <Button variant="success" type="submit" disabled={loading} className="signup-btn-row">
-                    {loading ? "Submitting..." : "Submit"}
+                    {loading ? "Creating account..." : "Create account"}
             </Button>
-            </>}
         </Form>
     )
 }

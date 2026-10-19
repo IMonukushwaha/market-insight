@@ -6,8 +6,6 @@ const usercontrollers = require("../controller/user");
 
 router.post('/signup', validateUser, wrapAsync(usercontrollers.signup));
 
-router.post('/verify-email', wrapAsync(usercontrollers.verifyEmail));
-
 router.post('/login', validatelogin, wrapAsync(usercontrollers.login));
 
 router.get('/check-auth', requireAuth, usercontrollers.checkAuth);

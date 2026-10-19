@@ -27,23 +27,6 @@ Market Insights is a full-stack web application that gives users instant, AI-gen
 **External Services**
 - Grok API (AI chatbot / insight generation)
 - Yahoo Finance API (real-time stock & financial data)
-- Nodemailer SMTP (email verification)
-
-## Email verification setup
-
-Add the SMTP settings below to `server/.env`. `CLIENT_ORIGIN` must point to the deployed client so verification links return to the app. For local development, use `http://localhost:5173`.
-
-```env
-SMTP_HOST=smtp.example.com
-SMTP_PORT=587
-SMTP_SECURE=false
-SMTP_USER=your-smtp-username
-SMTP_PASS=your-smtp-password
-SMTP_FROM="Market Insights <your-smtp-address@example.com>"
-CLIENT_ORIGIN=http://localhost:5173
-```
-
-New accounts must verify their email within 24 hours before logging in. Existing accounts remain usable.
 
 ## Project Structure
 ```
@@ -87,7 +70,6 @@ Market_insight/
 | Endpoint | Method | Description |
 |---|---|---|
 | `/api/users/signup` | POST | Register a new user |
-| `/verify-email` | POST | Verify a new user's email with the emailed token |
 | `/api/users/login` | POST | Log in an existing user |
 | `/api/users/check-auth` | GET | Check if user session is authenticated |
 | `/api/users/logout` | POST | Log out the current user |

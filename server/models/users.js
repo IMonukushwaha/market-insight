@@ -8,11 +8,6 @@ const userSchema = new Schema(
     hash: { type: String, required: true, select: false },
     salt: { type: String, select: false },
     passwordIterations: { type: Number, select: false },
-    // Keep accounts created before email verification enabled usable. New signups
-    // explicitly set this to false in the signup controller.
-    emailVerified: { type: Boolean, default: true },
-    emailVerificationTokenHash: { type: String, select: false },
-    emailVerificationExpires: { type: Date, select: false },
   }
 );
 

@@ -31,39 +31,6 @@
   text-align: left;
 }
 
-.signup-success,
-.verification-message {
-  margin: 0;
-  color: #c7f2d4;
-  line-height: 1.6;
-}
-
-.signup-success p {
-  margin: 0 0 0.65rem;
-}
-
-.signup-success a,
-.verification-card a {
-  color: #b5afff;
-  font-weight: 700;
-  text-decoration: none;
-  text-underline-offset: 3px;
-}
-
-.signup-success a:hover,
-.verification-card a:hover {
-  color: #d0ccff;
-  text-decoration: underline;
-}
-
-.verification-card::before {
-  content: "MARKET INSIGHTS  /  EMAIL CONFIRMATION";
-}
-
-.verification-card .verification-message {
-  color: #e1e5ef;
-}
-
 .signup-form .form-group {
   display: flex;
   flex-direction: column;
