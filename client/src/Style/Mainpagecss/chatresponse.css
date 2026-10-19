@@ -1,79 +1,154 @@
 .chat-response {
-    font-family: 'Söhne', 'Inter', -apple-system, sans-serif;
-    font-size: 15px;
-    line-height: 1.7;
-    color: #1f2320;
-    max-width: 680px;
+  align-self: stretch;
+  max-width: 100%;
+  padding: 0.1rem 0 0;
+  color: #3c4658;
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 0.96rem;
+  line-height: 1.75;
 }
 
 .chat-response p {
-    margin: 0 0 14px;
+  margin: 0 0 0.9rem;
 }
 
 .chat-response p:last-child {
-    margin-bottom: 0;
+  margin-bottom: 0;
 }
 
 .chat-response strong {
-    font-weight: 600;
-    color: #111412;
+  color: #202a3a;
+  font-weight: 700;
+}
+
+.chat-response ul,
+.chat-response ol {
+  margin: 0 0 0.9rem;
+  padding-left: 1.45rem;
+}
+
+.chat-response li {
+  margin-bottom: 0.32rem;
+  padding-left: 0.15rem;
+}
+
+.chat-response li::marker {
+  color: #756cf0;
 }
 
 .chat-response h1,
 .chat-response h2,
 .chat-response h3 {
-    font-weight: 600;
-    margin: 22px 0 10px;
-    line-height: 1.35;
+  margin: 1.25rem 0 0.55rem;
+  color: #202a3a;
+  font-weight: 720;
+  letter-spacing: -0.035em;
+  line-height: 1.35;
 }
 
 .chat-response h1:first-child,
 .chat-response h2:first-child,
 .chat-response h3:first-child {
-    margin-top: 0;
+  margin-top: 0;
 }
 
-.chat-response h1 { font-size: 19px; }
-.chat-response h2 { font-size: 17px; }
-.chat-response h3 {
-    font-size: 15px;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    color: #4a544d;
-}
-
-.chat-response ul,
-.chat-response ol {
-    margin: 0 0 14px;
-    padding-left: 22px;
-}
-
-.chat-response li {
-    margin-bottom: 6px;
-}
-
-.chat-response li::marker {
-    color: #8a938c;
-}
+.chat-response h1 { font-size: 1.35rem; }
+.chat-response h2 { font-size: 1.16rem; }
+.chat-response h3 { font-size: 1.02rem; }
 
 .chat-response code {
-    background: #f0f2f0;
-    padding: 2px 5px;
-    border-radius: 3px;
-    font-size: 13px;
+  padding: 0.13rem 0.4rem;
+  border: 1px solid #e8e8f1;
+  border-radius: 0.4rem;
+  background: #f5f5fa;
+  color: #5e4fc7;
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+  font-size: 0.85em;
+}
+
+.chat-response pre {
+  margin: 0 0 0.9rem;
+  padding: 1rem 1.1rem;
+  overflow-x: auto;
+  border: 1px solid #30384d;
+  border-radius: 0.85rem;
+  background: #20283a;
+  color: #f8fafc;
+  -webkit-overflow-scrolling: touch;
+}
+
+.chat-response pre code {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+}
+
+.chat-response blockquote {
+  margin: 0 0 0.9rem;
+  padding: 0.4rem 0 0.4rem 1rem;
+  border-left: 3px solid #8179ed;
+  color: #667085;
+}
+
+.chat-response table {
+  width: 100%;
+  margin: 0 0 0.9rem;
+  border-collapse: separate;
+  border-spacing: 0;
+  overflow: hidden;
+  border: 1px solid #e7eaf0;
+  border-radius: 0.75rem;
+  font-size: 0.88rem;
+}
+
+.chat-response th,
+.chat-response td {
+  padding: 0.55rem 0.7rem;
+  border-right: 1px solid #e7eaf0;
+  border-bottom: 1px solid #e7eaf0;
+  text-align: left;
+}
+
+.chat-response th:last-child,
+.chat-response td:last-child {
+  border-right: 0;
+}
+
+.chat-response tr:last-child td {
+  border-bottom: 0;
+}
+
+.chat-response th {
+  background: #f6f6fc;
+  color: #344054;
+  font-weight: 700;
+}
+
+.chat-response a {
+  color: #5b52d5;
+  text-decoration: underline;
+  text-decoration-color: #c3bfff;
+  text-underline-offset: 3px;
+}
+
+.chat-response a:hover {
+  color: #4339be;
 }
 
 @media (max-width: 480px) {
   .chat-response {
-    font-size: 14px;
-    max-width: 100%;
+    font-size: 0.9rem;
   }
-  .chat-response h1 { font-size: 17px; }
-  .chat-response h2 { font-size: 15.5px; }
-  .chat-response h3 { font-size: 14px; }
-  .chat-response p,
-  .chat-response li {
-    overflow-wrap: break-word;
-    word-break: break-word;
+
+  .chat-response table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+    -webkit-overflow-scrolling: touch;
   }
+
+  .chat-response h1 { font-size: 1.2rem; }
+  .chat-response h2 { font-size: 1.08rem; }
+  .chat-response h3 { font-size: 0.97rem; }
 }

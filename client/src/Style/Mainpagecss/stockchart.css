@@ -1,81 +1,133 @@
+.charts-panel {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.9rem;
+  margin-top: 1rem;
+}
+
 .stock-chart-card {
-  margin-top: 10px;
-  padding: 12px 16px;
-  border-radius: 12px;
-  background: rgba(0, 0, 0, 0.03);
-  border: 1px solid rgba(0, 0, 0, 0.08);
+  min-width: 0;
+  margin: 0;
+  padding: 1rem 1rem 0.8rem;
+  border: 1px solid #e8eaf2;
+  border-radius: 1rem;
+  background: linear-gradient(155deg, #fff 0%, #fcfcff 100%);
+  box-shadow: 0 5px 17px rgba(35, 40, 71, 0.045);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.stock-chart-card:hover {
+  transform: translateY(-1px);
+  border-color: #d9d7f7;
+  box-shadow: 0 9px 23px rgba(35, 40, 71, 0.07);
+}
+
+.stock-chart-card:first-child {
+  grid-column: 1 / -1;
 }
 
 .stock-chart-header {
   display: flex;
+  min-height: 25px;
+  align-items: center;
   justify-content: space-between;
-  align-items: baseline;
-  margin-bottom: 8px;
-  flex-wrap: wrap;
-  gap: 4px;
+  gap: 0.5rem;
+  margin-bottom: 0.45rem;
 }
 
 .stock-chart-name {
-  font-weight: 600;
-  font-size: 14px;
+  color: #344054;
+  font-size: 0.88rem;
+  font-weight: 700;
+  letter-spacing: -0.015em;
 }
 
 .stock-chart-price {
-  font-weight: 700;
-  font-size: 16px;
-  color: #4f46e5;
+  color: #5c53d8;
+  font-size: 1rem;
+  font-weight: 750;
+  letter-spacing: -0.03em;
 }
 
-.charts-panel {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  margin-top: 10px;
+.stock-chart-card .recharts-text {
+  fill: #7b8495;
+  font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+}
+
+.stock-chart-card .recharts-tooltip-wrapper {
+  outline: none;
+}
+
+.stock-chart-card .recharts-default-tooltip {
+  border: 1px solid #e7eaf0 !important;
+  border-radius: 0.7rem !important;
+  background: rgba(255, 255, 255, 0.97) !important;
+  box-shadow: 0 8px 22px rgba(23, 33, 47, 0.1);
+}
+
+.stock-chart-card .recharts-legend-item-text {
+  color: #667085 !important;
+  font-size: 0.73rem;
 }
 
 .chart-axis-caption {
+  margin-top: -0.2rem;
+  color: #98a1b2;
+  font-size: 0.68rem;
   text-align: center;
-  font-size: 11px;
-  color: #6b7280;
-  margin-top: 4px;
 }
 
 .chart-legend-row {
   display: flex;
-  justify-content: center;
   flex-wrap: wrap;
-  gap: 16px;
-  margin-top: 6px;
-  font-size: 12px;
-  color: #374151;
+  justify-content: center;
+  gap: 0.45rem 0.8rem;
+  margin-top: 0.55rem;
+  color: #667085;
+  font-size: 0.7rem;
 }
 
 .legend-item {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 0.35rem;
 }
 
 .legend-swatch {
   display: inline-block;
-  width: 10px;
-  height: 10px;
-  border-radius: 2px;
+  width: 8px;
+  height: 8px;
+  flex-shrink: 0;
+  border-radius: 3px;
+}
+
+@media (max-width: 700px) {
+  .charts-panel {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0.75rem;
+  }
+
+  .stock-chart-card:first-child {
+    grid-column: auto;
+  }
 }
 
 @media (max-width: 480px) {
   .stock-chart-card {
-    padding: 10px 10px;
-    margin-top: 8px;
+    padding: 0.8rem 0.7rem 0.7rem;
+    border-radius: 0.85rem;
   }
+
   .stock-chart-name {
-    font-size: 13px;
+    font-size: 0.82rem;
   }
+
   .stock-chart-price {
-    font-size: 14px;
+    font-size: 0.92rem;
   }
+
   .chart-legend-row {
-    gap: 10px 14px;
-    font-size: 11px;
+    gap: 0.4rem 0.65rem;
+    font-size: 0.66rem;
   }
 }

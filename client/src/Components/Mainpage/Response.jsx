@@ -9,7 +9,13 @@ export default function Response({ messages }) {
     <div className="response_container">
       {messages.map((msg, index) => (
         <div key={index} className="message_pair">
-          <p className="prompt">{msg.prompt}</p>
+          <div className="response-company-heading">
+            <span>Company market insight</span>
+            <h1>{msg.chartData?.companyInfo?.name || msg.chartData?.ticker || "Company not found"}</h1>
+            {msg.chartData?.ticker && msg.chartData?.companyInfo?.name && (
+              <small>{msg.chartData.ticker}</small>
+            )}
+          </div>
           <ChatResponse
             content={msg.response}
             animate={msg.isNew}

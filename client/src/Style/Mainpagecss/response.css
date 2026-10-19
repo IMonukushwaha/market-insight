@@ -1,176 +1,81 @@
 .response_container {
-  width: 100%;
-  max-width: 52rem;
-  margin: 0 auto;
-  padding: 2rem 1.25rem 3rem;
   display: flex;
+  width: min(100%, 900px);
   flex-direction: column;
-  gap: 2rem;
+  gap: 1.8rem;
+  margin: 0 auto;
+  padding: 1.8rem clamp(1rem, 4vw, 2rem) 3rem;
 }
 
 .message_pair {
   display: flex;
   flex-direction: column;
-  gap: 0.6rem;
-  animation: fadeIn 0.25s ease-out;
+  gap: 0.9rem;
+  animation: message-appear 0.28s ease-out;
 }
 
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(6px); }
-  to   { opacity: 1; transform: translateY(0); }
+@keyframes message-appear {
+  from { opacity: 0; transform: translateY(7px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
-.prompt {
-  align-self: flex-start;
-  background-color: #eef2ff;
-  color: #000000;
-  padding: 0.55rem 1rem;
-  border-radius: 0.75rem;
-  max-width: 80%;
-  width: fit-content;
-  font-size: 0.95rem;
-  font-weight: 600;
-  line-height: 1.4;
+.response-company-heading {
+  align-self: center;
+  display: flex;
+  width: min(100%, 620px);
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
   margin: 0;
-  overflow-wrap: break-word;
-  word-break: break-word;
+  padding: 1rem 1.5rem;
+  border: 1px solid #4b4b4b;
+  border-radius: 1.1rem;
+  background: linear-gradient(145deg, #303030, #292929);
+  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.22), inset 0 1px rgba(255, 255, 255, 0.035);
+  text-align: center;
 }
 
-/* AI response — full width, no bubble, generous line-height for
-   long-form reading. Markdown elements (headings/lists/code/etc.)
-   rendered inside get their own rules below since ReactMarkdown
-   outputs raw tags with no classes. */
-.ai_res,
-.chat-response {
-  align-self: stretch;
-  background-color: transparent;
-  color: #1f2937;
-  padding: 0.2rem 0 0;
+.response-company-heading > span {
+  color: #b5afff;
+  font-size: 0.68rem;
+  font-weight: 750;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.response-company-heading h1 {
   max-width: 100%;
-  font-size: 0.975rem;
-  line-height: 1.7;
   margin: 0;
-}
-
-.chat-response p {
-  margin: 0 0 0.85rem;
-}
-
-.chat-response p:last-child {
-  margin-bottom: 0;
-}
-
-.chat-response strong {
-  color: #111827;
-  font-weight: 600;
-}
-
-.chat-response ul,
-.chat-response ol {
-  margin: 0 0 0.85rem;
-  padding-left: 1.4rem;
-}
-
-.chat-response li {
-  margin-bottom: 0.3rem;
-}
-
-.chat-response h1,
-.chat-response h2,
-.chat-response h3 {
-  color: #111827;
-  font-weight: 700;
-  margin: 1.2rem 0 0.6rem;
+  overflow-wrap: anywhere;
+  color: #f5f6fc;
+  font-size: clamp(1.2rem, 3vw, 1.65rem);
+  font-weight: 740;
+  letter-spacing: -0.04em;
   line-height: 1.3;
 }
 
-.chat-response h1 { font-size: 1.25rem; }
-.chat-response h2 { font-size: 1.125rem; }
-.chat-response h3 { font-size: 1rem; }
-
-.chat-response code {
-  background-color: #f3f4f6;
-  color: #dc2626;
-  padding: 0.15rem 0.4rem;
-  border-radius: 0.35rem;
-  font-size: 0.85em;
-  font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
-}
-
-.chat-response pre {
-  background-color: #111827;
-  color: #f9fafb;
-  padding: 0.9rem 1rem;
-  border-radius: 0.6rem;
-  overflow-x: auto;
-  margin: 0 0 0.85rem;
-  -webkit-overflow-scrolling: touch;
-}
-
-.chat-response pre code {
-  background-color: transparent;
-  color: inherit;
-  padding: 0;
-}
-
-.chat-response blockquote {
-  border-left: 3px solid #c7d2fe;
-  padding-left: 0.9rem;
-  color: #4b5563;
-  margin: 0 0 0.85rem;
-  font-style: italic;
-}
-
-.chat-response table {
-  width: 100%;
-  border-collapse: collapse;
-  margin: 0 0 0.85rem;
-  font-size: 0.9rem;
-}
-
-.chat-response th,
-.chat-response td {
-  border: 1px solid #e5e7eb;
-  padding: 0.45rem 0.7rem;
-  text-align: left;
-}
-
-.chat-response th {
-  background-color: #f9fafb;
-  font-weight: 600;
-}
-
-.chat-response a {
-  color: #4f46e5;
-  text-decoration: underline;
-  text-underline-offset: 2px;
+.response-company-heading small {
+  color: #b3bbcc;
+  font-size: 0.76rem;
+  font-weight: 650;
+  letter-spacing: 0.08em;
 }
 
 @media (max-width: 768px) {
   .response_container {
-    padding: 1.5rem 1rem 2.5rem;
     gap: 1.5rem;
+    padding-top: 1.4rem;
+    padding-bottom: 2.5rem;
   }
 }
 
 @media (max-width: 480px) {
   .response_container {
-    padding: 1.25rem 0.9rem 2.5rem;
     gap: 1.25rem;
+    padding: 1.1rem 0.85rem 2rem;
   }
-  .prompt {
-    max-width: 92%;
-    font-size: 0.9rem;
-    padding: 0.5rem 0.85rem;
-  }
-  .ai_res,
-  .chat-response {
-    font-size: 0.9rem;
-  }
-  .chat-response table {
-    display: block;
-    overflow-x: auto;
-    white-space: nowrap;
-    -webkit-overflow-scrolling: touch;
+
+  .response-company-heading {
+    padding: 0.85rem 1rem;
   }
 }

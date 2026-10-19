@@ -1,67 +1,154 @@
 .signup-form {
+  position: relative;
   display: flex;
+  width: min(440px, calc(100% - 32px));
   flex-direction: column;
-  max-width: 24rem;
-  margin: 4rem auto;
-  padding: 2rem;
-  background-color: #f3f0f0;
-  border: 1px solid #e5e7eb;
-  border-radius: 1rem;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
   gap: 1.1rem;
+  margin: clamp(1.5rem, 7vh, 4.5rem) auto;
+  padding: clamp(1.5rem, 4vw, 2.4rem);
+  border: 1px solid #454545;
+  border-radius: 1.6rem;
+  background: #303030;
+  box-shadow: 0 28px 80px rgba(0, 0, 0, 0.38), 0 4px 14px rgba(0, 0, 0, 0.2);
+}
+
+.signup-form::before {
+  content: "MARKET INSIGHTS  /  GET STARTED";
+  display: block;
+  margin-bottom: -0.55rem;
+  color: #746be7;
+  font-size: 0.67rem;
+  font-weight: 750;
+  letter-spacing: 0.14em;
 }
 
 .signup-title {
-  margin: 0 0 0.5rem 0;
-  font-size: 1.4rem;
-  font-weight: 600;
-  color: #111827;
-  text-align: center;
+  margin: 0;
+  color: #f5f6fc;
+  font-size: clamp(1.65rem, 4vw, 2rem);
+  font-weight: 720;
+  letter-spacing: -0.055em;
+  text-align: left;
 }
 
-.form-group {
+.signup-success,
+.verification-message {
+  margin: 0;
+  color: #c7f2d4;
+  line-height: 1.6;
+}
+
+.signup-success p {
+  margin: 0 0 0.65rem;
+}
+
+.signup-success a,
+.verification-card a {
+  color: #b5afff;
+  font-weight: 700;
+  text-decoration: none;
+  text-underline-offset: 3px;
+}
+
+.signup-success a:hover,
+.verification-card a:hover {
+  color: #d0ccff;
+  text-decoration: underline;
+}
+
+.verification-card::before {
+  content: "MARKET INSIGHTS  /  EMAIL CONFIRMATION";
+}
+
+.verification-card .verification-message {
+  color: #e1e5ef;
+}
+
+.signup-form .form-group {
   display: flex;
   flex-direction: column;
-  gap: 0.4rem;
+  gap: 0.45rem;
 }
 
-.form-group label {
-  font-size: 1rem;
-  font-weight: 500;
-  color: #111827;
+.signup-form .form-group label {
+  color: #e1e5ef;
+  font-size: 0.88rem;
+  font-weight: 650;
 }
 
-.form-group input {
-  padding: 0.6rem 0.75rem;
-  font-size: 0.95rem;
-  border: 1px solid #d1d5db;
-  border-radius: 0.6rem;
-  outline: none;
+.signup-form .form-group input.form-control {
+  min-height: 48px;
+  padding: 0.7rem 0.9rem;
+  border: 1px solid #505050;
+  border-radius: 0.8rem;
+  background: #242424;
+  color: #f5f6fc;
   font-family: inherit;
-  transition: border-color 0.15s ease;
+  font-size: 0.94rem;
+  box-shadow: none;
+  transition: border-color 0.18s ease, background-color 0.18s ease, box-shadow 0.18s ease;
 }
 
-.form-group input:focus {
-  border-color: #111827;
+.signup-form .form-group input.form-control::placeholder {
+  color: #aeb6c8;
+}
+
+.signup-form .form-group input.form-control:focus {
+  border-color: #827af0;
+  background: #333;
+  box-shadow: 0 0 0 4px rgba(103, 95, 232, 0.13);
+}
+
+.signup-form .invalid-feedback,
+.signup-error {
+  color: #ff9eaa;
+  font-size: 0.84rem;
 }
 
 .signup-btn-row {
-  margin-top: 0.5rem;
-  justify-content: flex-end;
+  min-height: 48px;
+  margin-top: 0.1rem;
+  border: 1px solid #675fe8 !important;
+  border-radius: 0.85rem !important;
+  background: linear-gradient(135deg, #756cf0, #5c52da) !important;
+  color: #fff !important;
+  font-size: 0.95rem !important;
+  font-weight: 680 !important;
+  box-shadow: 0 9px 20px rgba(103, 95, 232, 0.2);
+  transition: transform 0.18s ease, box-shadow 0.18s ease, filter 0.18s ease;
+}
+
+.signup-btn-row:hover:not(:disabled) {
+  transform: translateY(-1px);
+  filter: saturate(1.1);
+  box-shadow: 0 12px 25px rgba(103, 95, 232, 0.27);
+}
+
+.signup-btn-row:focus-visible {
+  outline: 3px solid rgba(103, 95, 232, 0.28);
+  outline-offset: 3px;
+}
+
+.signup-btn-row:disabled {
+  opacity: 0.72;
+  box-shadow: none;
 }
 
 @media (max-width: 480px) {
   .signup-form {
-    max-width: 100%;
-    margin: 1.5rem 1rem;
+    width: calc(100% - 28px);
+    gap: 1rem;
+    margin: 1.5rem auto;
     padding: 1.5rem 1.25rem;
-    border-radius: 0.85rem;
+    border-radius: 1.25rem;
   }
-  .signup-title {
-    font-size: 1.25rem;
+
+  .signup-form::before {
+    font-size: 0.6rem;
   }
-  .form-group input {
-    font-size: 1rem;
-    padding: 0.7rem 0.85rem;
+
+  .signup-form .form-group input.form-control {
+    min-height: 48px;
+    font-size: 16px;
   }
 }

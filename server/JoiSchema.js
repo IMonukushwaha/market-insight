@@ -2,6 +2,7 @@ const Joi = require('joi');
 
 module.exports.userJoiSchema = Joi.object({
     email : Joi.string()
+    .email()
     .lowercase()
     .trim()
     .required(),

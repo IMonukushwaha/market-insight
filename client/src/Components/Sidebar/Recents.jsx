@@ -16,7 +16,7 @@ export default function Recents({ onNavigate }) {
             <p className="recents-title">Recent Searches</p>
             <hr className="recents-divider" />
             {recentChats.length === 0 ? (
-                <p className="recents-empty">No chats yet</p>
+                <p className="recents-empty">No company searches yet</p>
             ) : (
                 recentChats.map((chat) => (
                     <div className="recent-chat-row" key={chat._id}>

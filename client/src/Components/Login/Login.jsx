@@ -1,6 +1,5 @@
 import { useState } from "react"
-import { Link } from "react-router-dom"
-import { useNavigate } from "react-router-dom"
+import { Link, useLocation, useNavigate } from "react-router-dom"
 import { useAuth } from "../../Contexts/AuthContext";
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
@@ -11,6 +10,7 @@ export default function Login(){
     const { setCurrentUser } = useAuth();
 
     const navigate = useNavigate();
+    const location = useLocation();
 
     let [formdata, setFormdata] = useState({
         username : "",
@@ -61,7 +61,7 @@ export default function Login(){
             }
 
             setCurrentUser(data.user);
-            navigate("/");
+            navigate(location.state?.from?.pathname || "/search", { replace: true });
 
         } catch (err) {
             console.log(err);

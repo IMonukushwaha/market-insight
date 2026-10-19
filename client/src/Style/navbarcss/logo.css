@@ -1,39 +1,47 @@
 .logo-box {
   display: flex;
-  flex-direction: row;
   align-items: center;
-  gap: 0.5rem;
-  margin-left: 1rem;
+  gap: 0.65rem;
+  margin-left: 0.2rem;
 }
- 
+
 .logo-icon {
-  display: flex;
-  align-items: center;
-  color: #111827;
+  display: grid;
+  width: 38px;
+  height: 38px;
+  flex: 0 0 auto;
+  place-items: center;
+  border: 1px solid #e5e3ff;
+  border-radius: 12px;
+  background: linear-gradient(145deg, #f2f1ff, #e8e7ff);
+  color: #675fe8;
 }
- 
+
 .logo-icon svg {
-  width: 1.6rem;
-  height: 1.6rem;
+  width: 21px;
+  height: 21px;
 }
- 
+
 .logo-name p {
   margin: 0;
-  font-size: 1.05rem;
-  font-weight: 700;
-  color: #111827;
+  color: #17212f;
+  font-size: 1rem;
+  font-weight: 750;
+  letter-spacing: -0.04em;
 }
 
 @media (max-width: 480px) {
   .logo-box {
-    margin-left: 0.5rem;
-    gap: 0.35rem;
+    gap: 0.5rem;
+    margin-left: 0;
   }
-  .logo-icon svg {
-    width: 1.35rem;
-    height: 1.35rem;
+
+  .logo-icon {
+    width: 35px;
+    height: 35px;
   }
+
   .logo-name p {
-    font-size: 0.9rem;
+    font-size: 0.91rem;
   }
 }

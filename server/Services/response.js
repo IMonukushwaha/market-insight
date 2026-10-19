@@ -26,7 +26,7 @@ function extractKeyMetrics(ticker, data) {
 
 module.exports.responsechat = async (newPrompt) => {
   try {
-    console.log(`\nYou: ${newPrompt}`);
+    console.log(`\nCompany search: ${newPrompt}`);
     const ticker = await getTicker(newPrompt);
 
     // ---- Case 1: No ticker resolved -> tell the user directly, no general chat ----
@@ -43,11 +43,11 @@ module.exports.responsechat = async (newPrompt) => {
     // Only send a small curated slice to the LLM
     const keyMetrics = extractKeyMetrics(ticker, data);
 
-    const enrichedMessage = `The user asked: "${newPrompt}". This is about ${ticker}.
+    const enrichedMessage = `Prepare a company market insight report for ${ticker}.
 Key data:
 ${JSON.stringify(keyMetrics, null, 2)}
 
-Write a short, natural, conversational summary (3-5 sentences). No tables, no markdown formatting, no bullet points. Sound like a knowledgeable friend explaining the stock, not a report.`;
+Write a concise, factual overview in 3-5 sentences and a neutral report tone. Cover the available share-price trend, key financial signals, and relevant company news. Use only the supplied data; do not address the user, ask follow-up questions, use conversational phrasing, or give investment advice. Do not infer missing data.`;
 
     const response = await groq.chat.completions.create({
       model: "openai/gpt-oss-120b",

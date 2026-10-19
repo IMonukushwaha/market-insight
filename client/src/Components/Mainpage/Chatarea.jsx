@@ -9,11 +9,13 @@ export default function Chatarea(){
 
     return <>
     <div className="chatarea-box">
-        <div className="searchbar-top">
-            <Searchbar/>
-        </div>
+        {messages.length === 0 && (
+            <div className="searchbar-top">
+                <Searchbar />
+            </div>
+        )}
         <div className="response-scroll">
-            {loadingChat ? <p>Loading chat...</p> : <Response messages={messages}/>}
+            {loadingChat ? <p>Loading company insights...</p> : <Response messages={messages}/>}
         </div>
     </div>
     </>

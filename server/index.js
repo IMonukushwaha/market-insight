@@ -1,18 +1,12 @@
-require('dotenv').config();
+require('dotenv').config({ path: require('path').join(__dirname, '.env') });
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require("cors");
-const session = require('express-session');
-const { MongoStore } = require('connect-mongo');
-const passport = require('passport');
-const LocalStrategy = require('passport-local');
-const User = require('./models/users.js');
 const AppError = require("./utils/ExpressError.js");
 const userRoutes = require('./routes/userroutes.js');
 const chatRoutes = require('./routes/chatroutes.js');
 
-const Mongo_url = process.env.ATLASDB_URL;
-const NODE_ENV = process.env.NODE_ENV || 'development';
+const Mongo_url = process.env.MONGODB_URL || process.env.ATLASDB_URL;
 const app = express();
 let port = 5000;
 
@@ -45,32 +39,6 @@ app.use(cors({
 
 app.use(express.json({ limit: '100kb' }));
 
-// Sessions are now persisted in MongoDB (via connect-mongo) instead of the
-// default in-memory store — so logins survive server restarts / nodemon
-// reloads, and this scales past a single server instance.
-const sessionOptions = {
-    name: 'ctms.sid',
-    secret: process.env.Session_Secret,
-    resave: false,
-    saveUninitialized: false,
-    store: MongoStore.create({
-        client: mongoose.connection.getClient(),
-        ttl: 60 * 60 * 24 * 7, // 7 days, in seconds
-    }),
-    cookie: {
-        httpOnly: true,
-        sameSite: NODE_ENV === 'production' ? 'none' : 'lax',
-        secure: NODE_ENV === 'production',
-        maxAge: 1000 * 60 * 60 * 24 * 7, // 7 days, in ms
-    },
-};
-
-app.use(session(sessionOptions));
-app.use(passport.initialize());
-app.use(passport.session());
-passport.use(new LocalStrategy(User.authenticate()));
-passport.serializeUser(User.serializeUser());
-passport.deserializeUser(User.deserializeUser());
 
 app.get("/", (req, res) => {
     res.json({ message: "connected to server" });

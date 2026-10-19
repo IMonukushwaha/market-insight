@@ -66,7 +66,8 @@ export default function Searchbar(){
                     </svg>
                 </div>
                 <input
-                    placeholder="Enter a company name for market insight..."
+                    placeholder="Search a company name or ticker for market insights..."
+                    aria-label="Search market insights by company name or ticker"
                     value={prompt}
                     type="text"
                     onChange={handleOnChange}
@@ -74,7 +75,7 @@ export default function Searchbar(){
                     className="search-input"
                     disabled={loading}
                 />
-                {loading && <span className="search-loading">Searching</span>}
+                {loading && <span className="search-loading">Researching</span>}
             </div>
         </div>
     )
